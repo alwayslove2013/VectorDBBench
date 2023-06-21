@@ -51,7 +51,7 @@ def drawChart(data, st):
     metricsSet = set()
     for d in data:
         metricsSet = metricsSet.union(d["metricsSet"])
-    showMetrics = [metric for metric in metricOrder if metric in metricsSet]
+    showMetrics = [metric for metric in metricOrder if metric in metricsSet if metric != 'load_duration']
 
     for i, metric in enumerate(showMetrics):
         container = st.container()

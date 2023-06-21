@@ -347,4 +347,8 @@ DB_DBLABEL_TO_PRICE = {
         "p1.x1-8node": 0.779,
         "s1.x1-2node": 0.195,
     },
+    DB.OpenSearch.value: {
+        "q4c16g-d4c32g": 3.79 / 7.2,
+        "q8c32g-d8c64g": 6.43 / 7.2,
+    },
 }

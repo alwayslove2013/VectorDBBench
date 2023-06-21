@@ -1,5 +1,7 @@
 from enum import Enum
 from typing import Type
+
+from vectordb_bench.backend.clients.opensearch.opensearch import OpenSearch
 from .api import (
     VectorDB,
     DBConfig,
@@ -35,6 +37,7 @@ class DB(Enum):
     ElasticCloud = "ElasticCloud"
     QdrantCloud = "QdrantCloud"
     WeaviateCloud = "WeaviateCloud"
+    OpenSearch = "OpenSearch"
 
 
     @property
@@ -49,6 +52,7 @@ db2client = {
     DB.ElasticCloud: ElasticCloud,
     DB.QdrantCloud: QdrantCloud,
     DB.Pinecone: Pinecone,
+    DB.OpenSearch: OpenSearch,
 }
 
 
