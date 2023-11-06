@@ -13,7 +13,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "1cu-cap",
+          "db_label": "k-1cu-cap",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -40,7 +40,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "1cu-cap",
+          "db_label": "k-1cu-cap",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -67,7 +67,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "1cu-cap",
+          "db_label": "k-1cu-cap",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -94,7 +94,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "1cu-cap",
+          "db_label": "k-1cu-cap",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -121,7 +121,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "1cu-cap",
+          "db_label": "k-1cu-cap",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -148,7 +148,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "1cu-cap",
+          "db_label": "k-1cu-cap",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -175,7 +175,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "1cu-cap",
+          "db_label": "k-1cu-cap",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -202,7 +202,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "1cu-cap",
+          "db_label": "k-1cu-cap",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -229,7 +229,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "2cu-cap",
+          "db_label": "k-2cu-cap",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -256,7 +256,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "2cu-cap",
+          "db_label": "k-2cu-cap",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -283,7 +283,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "2cu-cap",
+          "db_label": "k-2cu-cap",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -310,7 +310,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "2cu-cap",
+          "db_label": "k-2cu-cap",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -337,7 +337,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "2cu-cap",
+          "db_label": "k-2cu-cap",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -364,7 +364,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "2cu-cap",
+          "db_label": "k-2cu-cap",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -391,7 +391,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "1cu-perf",
+          "db_label": "k-1cu-perf",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -418,7 +418,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "1cu-perf",
+          "db_label": "k-1cu-perf",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -445,7 +445,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "1cu-perf",
+          "db_label": "k-1cu-perf",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -472,7 +472,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "1cu-perf",
+          "db_label": "k-1cu-perf",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -499,7 +499,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "1cu-perf",
+          "db_label": "k-1cu-perf",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -526,7 +526,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "1cu-perf",
+          "db_label": "k-1cu-perf",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -553,7 +553,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "1cu-perf",
+          "db_label": "k-1cu-perf",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -580,7 +580,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "1cu-perf",
+          "db_label": "k-1cu-perf",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -607,7 +607,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "8cu-perf",
+          "db_label": "k-8cu-perf",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -634,7 +634,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "8cu-perf",
+          "db_label": "k-8cu-perf",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -661,7 +661,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "8cu-perf",
+          "db_label": "k-8cu-perf",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -688,7 +688,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "8cu-perf",
+          "db_label": "k-8cu-perf",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -715,7 +715,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "8cu-perf",
+          "db_label": "k-8cu-perf",
           "uri": "**********",
           "user": "root",
           "password": "**********"
@@ -742,7 +742,7 @@
       "task_config": {
         "db": "ZillizCloud",
         "db_config": {
-          "db_label": "8cu-perf",
+          "db_label": "k-8cu-perf",
           "uri": "**********",
           "user": "root",
           "password": "**********"
