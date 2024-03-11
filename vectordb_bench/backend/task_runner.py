@@ -58,7 +58,7 @@ class CaseRunner(BaseModel):
                 self.config.db == obj.config.db and \
                 self.config.db_case_config == obj.config.db_case_config and \
                 self.ca.dataset == obj.ca.dataset
-            return False
+        return False
 
     def display(self) -> dict:
         c_dict = self.ca.dict(include={'label':True, 'filters': True,'dataset':{'data': {'name': True, 'size': True, 'dim': True, 'metric_type': True, 'label': True}} })
@@ -141,7 +141,7 @@ class CaseRunner(BaseModel):
 
             self._init_search_runner()
             m.recall, m.serial_latency_p99 = self._serial_search()
-            m.qps = self._conc_search()
+            m.qps, m.conc_num_list, m.conc_qps_list, m.conc_latency_p99_list = self._conc_search()
         except Exception as e:
             log.warning(f"Failed to run performance case, reason = {e}")
             traceback.print_exc()
