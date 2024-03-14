@@ -21,6 +21,8 @@ def drawChartsByCase(allData, cases: list[Case], st):
             "db": caseData["db"]
 
         } for caseData in caseDataList for i in range(len(caseData["conc_num_list"]))]
+        if len(data) == 0:
+            continue
         drawChart(data, chartContainer)
 
         # errorDBs = failedTasks[case.name]

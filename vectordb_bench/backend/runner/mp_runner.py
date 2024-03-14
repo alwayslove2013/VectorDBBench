@@ -29,7 +29,7 @@ class MultiProcessingSearchRunner:
         k: int = 100,
         filters: dict | None = None,
         concurrencies: Iterable[int] = config.NUM_CONCURRENCY,
-        duration: int = 30,
+        duration: int = 180,
     ):
         self.db = db
         self.k = k

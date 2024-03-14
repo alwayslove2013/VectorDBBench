@@ -29,13 +29,12 @@ class Pinecone(VectorDB):
         self.batch_size = int(min(PINECONE_MAX_SIZE_PER_BATCH / (dim * 5), PINECONE_MAX_NUM_PER_BATCH))
         # Pincone will make connections with server while import
         # so place the import here.
-        import pinecone
-        pinecone.init(
-            api_key=self.api_key, environment=self.environment)
+        from pinecone import Pinecone
+        pc = Pinecone(api_key=self.api_key)
         if drop_old:
-            list_indexes = pinecone.list_indexes()
+            list_indexes = pc.list_indexes().names()
             if self.index_name in list_indexes:
-                index = pinecone.Index(self.index_name)
+                index = pc.Index(self.index_name)
                 index_dim = index.describe_index_stats()["dimension"]
                 if (index_dim != dim):
                     raise ValueError(
@@ -43,7 +42,7 @@ class Pinecone(VectorDB):
                 log.info(
                     f"Pinecone client delete old index: {self.index_name}")
                 index.delete(delete_all=True)
-                index.close()
+                # index.close()
             else:
                 raise ValueError(
                     f"Pinecone index {self.index_name} does not exist")
@@ -60,12 +59,11 @@ class Pinecone(VectorDB):
 
     @contextmanager
     def init(self) -> None:
-        import pinecone
-        pinecone.init(
-            api_key=self.api_key, environment=self.environment)
-        self.index = pinecone.Index(self.index_name)
+        from pinecone import Pinecone
+        pc = Pinecone(api_key=self.api_key)
+        self.index = pc.Index(self.index_name)
         yield
-        self.index.close()
+        # self.index.close()
 
     def ready_to_load(self):
         pass
@@ -111,6 +109,7 @@ class Pinecone(VectorDB):
                 top_k=k,
                 vector=query,
                 filter=pinecone_filters,
+                include_values=True,
             )['matches']
         except Exception as e:
             print(f"Error querying index: {e}")

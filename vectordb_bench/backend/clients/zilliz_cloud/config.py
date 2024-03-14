@@ -5,9 +5,10 @@ from ..milvus.config import MilvusIndexConfig, IndexType
 
 
 class ZillizCloudConfig(DBConfig):
-    uri: SecretStr
-    user: str
-    password: SecretStr
+    # uri: SecretStr = "https://in01-2ef112d6f68f08d.aws-us-west-2.vectordb-uat3.zillizcloud.com:19536" # 8cu
+    uri: SecretStr = "https://in01-b8ea2fdbdc27e05.aws-us-west-2.vectordb-uat3.zillizcloud.com:19539" # 1cu
+    user: str = "db_admin"
+    password: SecretStr = "Milvus123"
 
     def to_dict(self) -> dict:
         return {

@@ -19,7 +19,7 @@ class config:
 
     DROP_OLD = env.bool("DROP_OLD", True)
     USE_SHUFFLED_DATA = env.bool("USE_SHUFFLED_DATA", True)
-    NUM_CONCURRENCY = [1, 5, 10, 15, 20, 25, 30, 35]
+    NUM_CONCURRENCY = list(range(1, 10, 1)) + list(range(10, 121, 10))
 
     RESULTS_LOCAL_DIR = pathlib.Path(__file__).parent.joinpath("results")
 
