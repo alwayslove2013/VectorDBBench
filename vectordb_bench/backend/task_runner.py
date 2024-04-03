@@ -56,9 +56,9 @@ class CaseRunner(BaseModel):
         if isinstance(obj, CaseRunner):
             return self.ca.label == CaseLabel.Performance and \
                 self.config.db == obj.config.db and \
-                self.config.db_case_config == obj.config.db_case_config and \
                 self.ca.dataset == obj.ca.dataset
-            return False
+                # self.config.db_case_config == obj.config.db_case_config and \
+        return False
 
     def display(self) -> dict:
         c_dict = self.ca.dict(include={'label':True, 'filters': True,'dataset':{'data': {'name': True, 'size': True, 'dim': True, 'metric_type': True, 'label': True}} })
@@ -141,7 +141,9 @@ class CaseRunner(BaseModel):
 
             self._init_search_runner()
             m.recall, m.serial_latency_p99 = self._serial_search()
-            m.qps = self._conc_search()
+            if m.recall < 0.98:
+                return m
+            m.qps, m.conc_num_list, m.conc_qps_list, m.conc_latency_p99_list = self._conc_search()
         except Exception as e:
             log.warning(f"Failed to run performance case, reason = {e}")
             traceback.print_exc()
@@ -211,22 +213,23 @@ class CaseRunner(BaseModel):
 
     def _init_search_runner(self):
         test_emb = np.stack(self.ca.dataset.test_data["emb"])
+        # test_emb = self.ca.dataset.test_data
         if self.normalize:
             test_emb = test_emb / np.linalg.norm(test_emb, axis=1)[:, np.newaxis]
-        self.test_emb = test_emb.tolist()
+        # self.test_emb = test_emb.tolist()
 
         gt_df = self.ca.dataset.gt_data
 
         self.serial_search_runner = SerialSearchRunner(
             db=self.db,
-            test_data=self.test_emb,
+            test_data=test_emb,
             ground_truth=gt_df,
             filters=self.ca.filters,
         )
 
         self.search_runner =  MultiProcessingSearchRunner(
             db=self.db,
-            test_data=self.test_emb,
+            test_data=test_emb,
             filters=self.ca.filters,
         )
 

@@ -1,0 +1,81 @@
+{
+    "run_id": "6a592ddf8cc14385985e1a2b79ca6356",
+    "task_label": "g5-2xl",
+    "results": [
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 510.1095,
+                "qps": 3775.1389,
+                "serial_latency_p99": 0.0036,
+                "recall": 0.9871,
+                "conc_num_list": [
+                    1,
+                    10,
+                    20,
+                    40,
+                    80,
+                    120,
+                    160,
+                    200,
+                    240,
+                    280,
+                    320
+                ],
+                "conc_qps_list": [
+                    398.8694,
+                    1186.2755,
+                    1678.8692,
+                    2371.2308,
+                    2739.9414,
+                    3073.8499,
+                    3215.8439,
+                    3389.6987,
+                    3513.7417,
+                    3577.1102,
+                    3775.1389
+                ],
+                "conc_latency_p99_list": [
+                    0.0022855604140728245,
+                    0.005825563062373839,
+                    0.006422311972489114,
+                    0.01018721249889495,
+                    0.010926623000937979,
+                    0.015087426719568612,
+                    0.016210160675087536,
+                    0.018755253306594385,
+                    0.021629767116504082,
+                    0.01816503233880212,
+                    0.027956804573561384
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "g5-2xl",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "GPU_CAGRA",
+                    "metric_type": "COSINE",
+                    "intermediate_graph_degree": 64,
+                    "graph_degree": 32,
+                    "itopk_size": 128,
+                    "team_size": 0,
+                    "search_width": 4,
+                    "min_iterations": 0,
+                    "max_iterations": 0,
+                    "build_algo": "IVF_PQ",
+                    "cache_dataset_on_device": "false",
+                    "refine_ratio": 1.0
+                },
+                "case_config": {
+                    "case_id": 5,
+                    "custom_case": {}
+                }
+            },
+            "label": ":)"
+        }
+    ],
+    "file_fmt": "result_{}_{}_{}.json"
+}

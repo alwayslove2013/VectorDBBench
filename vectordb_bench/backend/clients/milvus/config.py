@@ -3,7 +3,7 @@ from ..api import DBConfig, DBCaseConfig, MetricType, IndexType
 
 
 class MilvusConfig(DBConfig):
-    uri: SecretStr = "http://localhost:19530"
+    uri: SecretStr = "http://10.15.11.207:19530"
 
     def to_dict(self) -> dict:
         return {"uri": self.uri.get_secret_value()}
@@ -19,8 +19,8 @@ class MilvusIndexConfig(BaseModel):
         if not self.metric_type:
             return ""
 
-        # if self.metric_type == MetricType.COSINE:
-        #     return MetricType.L2.value
+        if self.metric_type == MetricType.COSINE:
+            return MetricType.L2.value
         return self.metric_type.value
 
 
@@ -189,12 +189,13 @@ class GPUCAGRAConfig(MilvusIndexConfig, DBCaseConfig):
     graph_degree: int = 32
     itopk_size: int = 128
     team_size: int = 0
-    search_width: int = 4
+    search_width: int = 1
     min_iterations: int = 0
-    max_iterations: int = 0
-    build_algo: str = "IVF_PQ" # IVF_PQ; NN_DESCENT;
-    cache_dataset_on_device: str
-    refine_ratio: float | None = None
+    max_iterations: int = 34
+    build_algo: str = "NN_DESCENT" # IVF_PQ; NN_DESCENT;
+    nn_descent_niter: int = 100
+    cache_dataset_on_device: str = "false"
+    refine_ratio: float = 1.0
     index: IndexType = IndexType.GPU_CAGRA
 
     def index_param(self) -> dict:
@@ -204,8 +205,9 @@ class GPUCAGRAConfig(MilvusIndexConfig, DBCaseConfig):
             "params": {
                 "intermediate_graph_degree": self.intermediate_graph_degree,
                 "graph_degree": self.graph_degree,
-                "build_algo": self.build_algo,
+                "build_algo": "NN_DESCENT",
                 "cache_dataset_on_device": self.cache_dataset_on_device,
+                "nn_descent_niter": self.nn_descent_niter,
             },
         }
 

@@ -1,4 +1,4 @@
-from vectordb_bench.backend.cases import Case
+from vectordb_bench.backend.cases import Case, CaseType
 from vectordb_bench.frontend.components.check_results.data import getChartData
 from vectordb_bench.frontend.components.check_results.expanderStyle import initSidebarExanderStyle
 from vectordb_bench.frontend.const.dbCaseConfigs import CASE_LIST
@@ -8,7 +8,7 @@ import streamlit as st
 from vectordb_bench.models import CaseResult, TestResult
 
 
-def getshownData(results: list[TestResult], st):
+def getshownData(results: list[TestResult], st, dbNames: list[str] = [], caseList: list[CaseType] = [], **kwargs):
     # hide the nav
     st.markdown(
         "<style> div[data-testid='stSidebarNav'] {display: none;} </style>",
@@ -18,7 +18,8 @@ def getshownData(results: list[TestResult], st):
     st.header("Filters")
 
     shownResults = getshownResults(results, st)
-    showDBNames, showCases = getShowDbsAndCases(shownResults, st)
+    showDBNames, showCases = getShowDbsAndCases(
+        shownResults, st, dbNames=dbNames, caseList=caseList)
 
     shownData, failedTasks = getChartData(shownResults, showDBNames, showCases)
 
@@ -52,12 +53,13 @@ def getshownResults(results: list[TestResult], st) -> list[CaseResult]:
     return selectedResult
 
 
-def getShowDbsAndCases(result: list[CaseResult], st) -> tuple[list[str], list[Case]]:
+def getShowDbsAndCases(result: list[CaseResult], st, dbNames: list[str] = [], caseList: list[CaseType] = []) -> tuple[list[str], list[Case]]:
     initSidebarExanderStyle(st)
     allDbNames = list(set({res.task_config.db_name for res in result}))
     allDbNames.sort()
     allCasesSet = set({res.task_config.case_config.case_id for res in result})
-    allCases: list[Case] = [case.case_cls() for case in CASE_LIST if case in allCasesSet]
+    allCases: list[CaseType] = [
+        case.case_cls() for case in (caseList if len(caseList) > 0 else CASE_LIST) if case in allCasesSet]
 
     # DB Filter
     dbFilterContainer = st.container()

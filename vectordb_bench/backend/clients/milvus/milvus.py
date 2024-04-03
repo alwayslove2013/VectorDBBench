@@ -101,6 +101,7 @@ class Milvus(VectorDB):
         try:
             self.col.flush()
             # wait for index done and load refresh
+            log.info(f"index_params: {self.case_config.index_param()}")
             self.col.create_index(
                 self._vector_field,
                 self.case_config.index_param(),
@@ -156,7 +157,8 @@ class Milvus(VectorDB):
 
     def need_normalize_cosine(self) -> bool:
         """Wheather this database need to normalize dataset to support COSINE"""
-        return False
+        # return False
+        return True
 
     def insert_embeddings(
         self,

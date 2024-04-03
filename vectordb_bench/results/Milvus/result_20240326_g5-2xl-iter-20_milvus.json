@@ -1,0 +1,84 @@
+{
+    "run_id": "58850d70938f4f3ea015de001c0e8ba9",
+    "task_label": "g5-2xl-iter-20",
+    "results": [
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 300.095,
+                "qps": 4203.0357,
+                "serial_latency_p99": 0.0033,
+                "recall": 0.9429,
+                "conc_num_list": [
+                    1,
+                    10,
+                    20,
+                    40,
+                    80,
+                    120,
+                    160,
+                    200,
+                    240,
+                    280,
+                    320,
+                    360
+                ],
+                "conc_qps_list": [
+                    412.0927,
+                    1320.4966,
+                    1864.5421,
+                    2623.0358,
+                    3062.4221,
+                    3271.4053,
+                    3489.7153,
+                    3675.1195,
+                    3802.4241,
+                    4031.6714,
+                    4101.4372,
+                    4203.0357
+                ],
+                "conc_latency_p99_list": [
+                    0.002212365403457079,
+                    0.005202931206213543,
+                    0.006562219861496124,
+                    0.009244713026426325,
+                    0.010617326447673258,
+                    0.011872816491345292,
+                    0.01387586130260679,
+                    0.01634924989012361,
+                    0.01615374066253571,
+                    0.021542016347660682,
+                    0.017030686705086555,
+                    0.020570648489805173
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "g5-2xl-iter-20",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "GPU_CAGRA",
+                    "metric_type": "COSINE",
+                    "intermediate_graph_degree": 64,
+                    "graph_degree": 32,
+                    "itopk_size": 128,
+                    "team_size": 0,
+                    "search_width": 1,
+                    "min_iterations": 0,
+                    "max_iterations": 34,
+                    "build_algo": "NN_DESCENT",
+                    "cache_dataset_on_device": "false",
+                    "refine_ratio": 1.0
+                },
+                "case_config": {
+                    "case_id": 5,
+                    "custom_case": {}
+                }
+            },
+            "label": ":)"
+        }
+    ],
+    "file_fmt": "result_{}_{}_{}.json"
+}

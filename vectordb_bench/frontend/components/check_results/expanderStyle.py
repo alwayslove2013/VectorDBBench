@@ -16,6 +16,8 @@ def initSidebarExanderStyle(st):
     st.markdown(
         """<style>
             section[data-testid='stSidebar']
+                { width: 352px !important; }
+            section[data-testid='stSidebar']
                 div[data-testid='stExpander']
                     div[data-testid='stVerticalBlock']
                         { gap: 0.2rem; }

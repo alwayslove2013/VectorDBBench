@@ -8,6 +8,7 @@ from collections import namedtuple
 import logging
 import pathlib
 from enum import Enum
+import numpy as np
 import pandas as pd
 from pydantic import validator, PrivateAttr
 import polars as pl
