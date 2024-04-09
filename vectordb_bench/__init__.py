@@ -14,13 +14,13 @@ class config:
     LOG_LEVEL = env.str("LOG_LEVEL", "INFO")
 
     DEFAULT_DATASET_URL = env.str("DEFAULT_DATASET_URL", AWS_S3_URL)
-    DATASET_LOCAL_DIR = env.path("DATASET_LOCAL_DIR", "/tmp/vectordb_bench/dataset")
+    DATASET_LOCAL_DIR = env.path("DATASET_LOCAL_DIR", "/data/vectordb_bench/dataset")
     NUM_PER_BATCH = env.int("NUM_PER_BATCH", 5000)
 
     DROP_OLD = env.bool("DROP_OLD", True)
     USE_SHUFFLED_DATA = env.bool("USE_SHUFFLED_DATA", True)
     NUM_CONCURRENCY = [1, 50, 100, 150, 200, 250, 300, 350, 400]
-    # NUM_CONCURRENCY = []
+    # NUM_CONCURRENCY = [1, 5, 10]
 
     RESULTS_LOCAL_DIR = pathlib.Path(__file__).parent.joinpath("results")
 

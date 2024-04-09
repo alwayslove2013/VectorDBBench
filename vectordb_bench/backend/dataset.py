@@ -198,7 +198,8 @@ class DatasetManager(BaseModel):
 
         if gt_file is not None and test_file is not None:
             self.test_data = self._read_file(test_file)
-            self.gt_data = self._read_file(gt_file)
+            # self.gt_data = self._read_file(gt_file)
+            self.gt_data = self._read_file("neighbors_25p.parquet")
 
         prefix = "shuffle_train" if use_shuffled else "train"
         self.train_files = sorted([f.name for f in self.data_dir.glob(f'{prefix}*.parquet')])

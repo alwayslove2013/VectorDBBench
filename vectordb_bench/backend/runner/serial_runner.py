@@ -46,7 +46,8 @@ class SerialInsertRunner:
                 del(emb_np)
                 log.debug(f"batch dataset size: {len(all_embeddings)}, {len(all_metadata)}")
 
-                last_batch = self.dataset.data.size - count == len(all_metadata)
+                # last_batch = self.dataset.data.size - count == len(all_metadata)
+                last_batch = 2_500_000 - count == len(all_metadata)
                 insert_count, error = self.db.insert_embeddings(
                     embeddings=all_embeddings,
                     metadata=all_metadata,
@@ -59,6 +60,8 @@ class SerialInsertRunner:
                 count += insert_count
                 if count % 100_000 == 0:
                     log.info(f"({mp.current_process().name:16}) Loaded {count} embeddings into VectorDB")
+                if last_batch:
+                    break
 
             log.info(f"({mp.current_process().name:16}) Finish loading all dataset into VectorDB, dur={time.perf_counter()-start}")
             return count
