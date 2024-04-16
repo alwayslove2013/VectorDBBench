@@ -11,7 +11,7 @@ def getNewResults():
 
     for res in allResults:
         # if res.task_label not in ['standard', 'example']:
-        if 'openai-qps' in res.task_label:
+        if 'g5' in res.task_label:
             results = res.results
             for result in results:
                 if result.label == ResultLabel.NORMAL:

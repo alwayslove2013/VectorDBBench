@@ -1,0 +1,1447 @@
+{
+    "run_id": "1ee1c01bc65d47d282f2130888a63b67",
+    "task_label": "g5-8c-1gpu",
+    "results": [
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 343.7366,
+                "qps": 4344.3241,
+                "serial_latency_p99": 0.0039,
+                "recall": 0.9808,
+                "conc_num_list": [
+                    1,
+                    50,
+                    100,
+                    150,
+                    200,
+                    250,
+                    300,
+                    350,
+                    400,
+                    450
+                ],
+                "conc_qps_list": [
+                    369.4744,
+                    2496.2328,
+                    2979.89,
+                    3335.5783,
+                    3561.9939,
+                    3779.8837,
+                    3942.2011,
+                    4089.7365,
+                    4214.0926,
+                    4344.3241
+                ],
+                "conc_latency_p99_list": [
+                    0.002388320790640137,
+                    0.010464313740109355,
+                    0.01274786779633505,
+                    0.017063849699107413,
+                    0.019271984464810883,
+                    0.02222396517245652,
+                    0.024159164987588883,
+                    0.027644215202143822,
+                    0.027909429961118986,
+                    0.03371211114420112
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "high-conc-iter-30-ef-100-sw-1-nn-100",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "GPU_CAGRA",
+                    "metric_type": "COSINE",
+                    "intermediate_graph_degree": 64,
+                    "graph_degree": 32,
+                    "itopk_size": 100,
+                    "team_size": 0,
+                    "search_width": 1,
+                    "min_iterations": 0,
+                    "max_iterations": 30,
+                    "build_algo": "NN_DESCENT",
+                    "nn_descent_niter": 100,
+                    "cache_dataset_on_device": "false",
+                    "refine_ratio": 1.0
+                },
+                "case_config": {
+                    "case_id": 5,
+                    "custom_case": {}
+                }
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 343.7366,
+                "qps": 4308.4022,
+                "serial_latency_p99": 0.0036,
+                "recall": 0.9805,
+                "conc_num_list": [
+                    1,
+                    50,
+                    100,
+                    150,
+                    200,
+                    250,
+                    300,
+                    350,
+                    400,
+                    450
+                ],
+                "conc_qps_list": [
+                    391.9929,
+                    2587.9155,
+                    3046.8846,
+                    3392.3885,
+                    3594.9781,
+                    3791.5563,
+                    3967.2076,
+                    4146.0407,
+                    4233.2522,
+                    4308.4022
+                ],
+                "conc_latency_p99_list": [
+                    0.002319167520252449,
+                    0.010394708234760219,
+                    0.01241859142616413,
+                    0.016043394719228308,
+                    0.018226970146202802,
+                    0.021059675658158812,
+                    0.023018274740781632,
+                    0.028602525127209993,
+                    0.027880339165109035,
+                    0.027820909739632044
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "high-conc-iter-30-ef-105-sw-1-nn-100",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "GPU_CAGRA",
+                    "metric_type": "COSINE",
+                    "intermediate_graph_degree": 64,
+                    "graph_degree": 32,
+                    "itopk_size": 105,
+                    "team_size": 0,
+                    "search_width": 1,
+                    "min_iterations": 0,
+                    "max_iterations": 30,
+                    "build_algo": "NN_DESCENT",
+                    "nn_descent_niter": 100,
+                    "cache_dataset_on_device": "false",
+                    "refine_ratio": 1.0
+                },
+                "case_config": {
+                    "case_id": 5,
+                    "custom_case": {}
+                }
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 343.7366,
+                "qps": 4316.4271,
+                "serial_latency_p99": 0.0036,
+                "recall": 0.9806,
+                "conc_num_list": [
+                    1,
+                    50,
+                    100,
+                    150,
+                    200,
+                    250,
+                    300,
+                    350,
+                    400,
+                    450
+                ],
+                "conc_qps_list": [
+                    389.9607,
+                    2561.2117,
+                    3048.995,
+                    3376.6344,
+                    3586.0017,
+                    3789.7274,
+                    3977.2875,
+                    4095.4626,
+                    4211.4678,
+                    4316.4271
+                ],
+                "conc_latency_p99_list": [
+                    0.0023353389821832026,
+                    0.010034497166961955,
+                    0.0125470720293657,
+                    0.01646619588278281,
+                    0.018205303792419726,
+                    0.02009375599998748,
+                    0.02213662370449656,
+                    0.0255851397396169,
+                    0.02803539237552286,
+                    0.03217755729786331
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "high-conc-iter-30-ef-110-sw-1-nn-100",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "GPU_CAGRA",
+                    "metric_type": "COSINE",
+                    "intermediate_graph_degree": 64,
+                    "graph_degree": 32,
+                    "itopk_size": 110,
+                    "team_size": 0,
+                    "search_width": 1,
+                    "min_iterations": 0,
+                    "max_iterations": 30,
+                    "build_algo": "NN_DESCENT",
+                    "nn_descent_niter": 100,
+                    "cache_dataset_on_device": "false",
+                    "refine_ratio": 1.0
+                },
+                "case_config": {
+                    "case_id": 5,
+                    "custom_case": {}
+                }
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 343.7366,
+                "qps": 4363.0877,
+                "serial_latency_p99": 0.0036,
+                "recall": 0.9807,
+                "conc_num_list": [
+                    1,
+                    50,
+                    100,
+                    150,
+                    200,
+                    250,
+                    300,
+                    350,
+                    400,
+                    450
+                ],
+                "conc_qps_list": [
+                    390.9857,
+                    2623.2814,
+                    3030.9611,
+                    3387.0566,
+                    3578.8503,
+                    3807.5353,
+                    3969.9795,
+                    4100.2168,
+                    4225.1187,
+                    4363.0877
+                ],
+                "conc_latency_p99_list": [
+                    0.002325422554416582,
+                    0.010962303894787691,
+                    0.012235949220883776,
+                    0.01616835543258403,
+                    0.01845962966086645,
+                    0.021904949433605544,
+                    0.023083340404999035,
+                    0.027859419220614655,
+                    0.028682678652373214,
+                    0.034119561205827265
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "high-conc-iter-30-ef-115-sw-1-nn-100",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "GPU_CAGRA",
+                    "metric_type": "COSINE",
+                    "intermediate_graph_degree": 64,
+                    "graph_degree": 32,
+                    "itopk_size": 115,
+                    "team_size": 0,
+                    "search_width": 1,
+                    "min_iterations": 0,
+                    "max_iterations": 30,
+                    "build_algo": "NN_DESCENT",
+                    "nn_descent_niter": 100,
+                    "cache_dataset_on_device": "false",
+                    "refine_ratio": 1.0
+                },
+                "case_config": {
+                    "case_id": 5,
+                    "custom_case": {}
+                }
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 343.7366,
+                "qps": 4345.6426,
+                "serial_latency_p99": 0.0036,
+                "recall": 0.9804,
+                "conc_num_list": [
+                    1,
+                    50,
+                    100,
+                    150,
+                    200,
+                    250,
+                    300,
+                    350,
+                    400,
+                    450
+                ],
+                "conc_qps_list": [
+                    387.6019,
+                    2595.1972,
+                    3021.2159,
+                    3364.2685,
+                    3599.9632,
+                    3789.4562,
+                    3935.8542,
+                    4092.9954,
+                    4239.5061,
+                    4345.6426
+                ],
+                "conc_latency_p99_list": [
+                    0.0023476476715732133,
+                    0.010758974858802684,
+                    0.012392024051438784,
+                    0.015966584831563522,
+                    0.01935198445077913,
+                    0.021706089322220942,
+                    0.02214246271200318,
+                    0.025471633695370838,
+                    0.030268690497083115,
+                    0.032317426030076604
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "high-conc-iter-30-ef-120-sw-1-nn-100",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "GPU_CAGRA",
+                    "metric_type": "COSINE",
+                    "intermediate_graph_degree": 64,
+                    "graph_degree": 32,
+                    "itopk_size": 120,
+                    "team_size": 0,
+                    "search_width": 1,
+                    "min_iterations": 0,
+                    "max_iterations": 30,
+                    "build_algo": "NN_DESCENT",
+                    "nn_descent_niter": 100,
+                    "cache_dataset_on_device": "false",
+                    "refine_ratio": 1.0
+                },
+                "case_config": {
+                    "case_id": 5,
+                    "custom_case": {}
+                }
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 343.7366,
+                "qps": 4283.716,
+                "serial_latency_p99": 0.0036,
+                "recall": 0.9829,
+                "conc_num_list": [
+                    1,
+                    50,
+                    100,
+                    150,
+                    200,
+                    250,
+                    300,
+                    350,
+                    400,
+                    450
+                ],
+                "conc_qps_list": [
+                    389.0817,
+                    2520.2628,
+                    2995.1977,
+                    3339.5613,
+                    3550.2268,
+                    3728.954,
+                    3922.7774,
+                    4053.657,
+                    4144.8476,
+                    4283.716
+                ],
+                "conc_latency_p99_list": [
+                    0.0023392601358802495,
+                    0.00979223170451005,
+                    0.012420605971999975,
+                    0.016852211654106213,
+                    0.01996598881668324,
+                    0.020933855401654,
+                    0.0250909272504985,
+                    0.02732125210084632,
+                    0.025411989608079964,
+                    0.031710143181910094
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "high-conc-iter-32-ef-100-sw-1-nn-100",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "GPU_CAGRA",
+                    "metric_type": "COSINE",
+                    "intermediate_graph_degree": 64,
+                    "graph_degree": 32,
+                    "itopk_size": 100,
+                    "team_size": 0,
+                    "search_width": 1,
+                    "min_iterations": 0,
+                    "max_iterations": 32,
+                    "build_algo": "NN_DESCENT",
+                    "nn_descent_niter": 100,
+                    "cache_dataset_on_device": "false",
+                    "refine_ratio": 1.0
+                },
+                "case_config": {
+                    "case_id": 5,
+                    "custom_case": {}
+                }
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 343.7366,
+                "qps": 4076.2641,
+                "serial_latency_p99": 0.0037,
+                "recall": 0.9828,
+                "conc_num_list": [
+                    1,
+                    50,
+                    100,
+                    150,
+                    200,
+                    250,
+                    300,
+                    350,
+                    400,
+                    450
+                ],
+                "conc_qps_list": [
+                    387.9927,
+                    2534.9903,
+                    2976.0089,
+                    3300.3373,
+                    3526.0344,
+                    3716.8676,
+                    3907.681,
+                    3870.5616,
+                    4045.7228,
+                    4076.2641
+                ],
+                "conc_latency_p99_list": [
+                    0.002337706002199411,
+                    0.010416395056296823,
+                    0.012583359279531577,
+                    0.01644526198209787,
+                    0.01831229142186312,
+                    0.02077277626813302,
+                    0.025765957020031056,
+                    0.026436184762933405,
+                    0.030746383510185115,
+                    0.03095620855153684
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "high-conc-iter-32-ef-105-sw-1-nn-100",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "GPU_CAGRA",
+                    "metric_type": "COSINE",
+                    "intermediate_graph_degree": 64,
+                    "graph_degree": 32,
+                    "itopk_size": 105,
+                    "team_size": 0,
+                    "search_width": 1,
+                    "min_iterations": 0,
+                    "max_iterations": 32,
+                    "build_algo": "NN_DESCENT",
+                    "nn_descent_niter": 100,
+                    "cache_dataset_on_device": "false",
+                    "refine_ratio": 1.0
+                },
+                "case_config": {
+                    "case_id": 5,
+                    "custom_case": {}
+                }
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 343.7366,
+                "qps": 4049.5515,
+                "serial_latency_p99": 0.0036,
+                "recall": 0.9828,
+                "conc_num_list": [
+                    1,
+                    50,
+                    100,
+                    150,
+                    200,
+                    250,
+                    300,
+                    350,
+                    400,
+                    450
+                ],
+                "conc_qps_list": [
+                    388.0625,
+                    2484.687,
+                    2908.5244,
+                    3189.2887,
+                    3383.0269,
+                    3545.747,
+                    3755.4664,
+                    3893.9964,
+                    3923.8102,
+                    4049.5515
+                ],
+                "conc_latency_p99_list": [
+                    0.002354371760811773,
+                    0.010565381919512583,
+                    0.01288215653221996,
+                    0.016701621593062738,
+                    0.019090514838970556,
+                    0.021671412991694523,
+                    0.02500320305065834,
+                    0.027656331475585466,
+                    0.02660470243999007,
+                    0.029943245654401106
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "high-conc-iter-32-ef-110-sw-1-nn-100",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "GPU_CAGRA",
+                    "metric_type": "COSINE",
+                    "intermediate_graph_degree": 64,
+                    "graph_degree": 32,
+                    "itopk_size": 110,
+                    "team_size": 0,
+                    "search_width": 1,
+                    "min_iterations": 0,
+                    "max_iterations": 32,
+                    "build_algo": "NN_DESCENT",
+                    "nn_descent_niter": 100,
+                    "cache_dataset_on_device": "false",
+                    "refine_ratio": 1.0
+                },
+                "case_config": {
+                    "case_id": 5,
+                    "custom_case": {}
+                }
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 343.7366,
+                "qps": 4065.2256,
+                "serial_latency_p99": 0.0039,
+                "recall": 0.9825,
+                "conc_num_list": [
+                    1,
+                    50,
+                    100,
+                    150,
+                    200,
+                    250,
+                    300,
+                    350,
+                    400,
+                    450
+                ],
+                "conc_qps_list": [
+                    387.8589,
+                    2486.709,
+                    2870.0054,
+                    3197.9756,
+                    3393.5933,
+                    3581.8877,
+                    3733.2973,
+                    3831.4578,
+                    3921.3505,
+                    4065.2256
+                ],
+                "conc_latency_p99_list": [
+                    0.0023526512717580773,
+                    0.0106434843448842,
+                    0.012601689863594947,
+                    0.01622365203327354,
+                    0.01843097923480236,
+                    0.020322589156231332,
+                    0.025117738072257267,
+                    0.027960298358500585,
+                    0.025754568277626823,
+                    0.03336918011641319
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "high-conc-iter-32-ef-115-sw-1-nn-100",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "GPU_CAGRA",
+                    "metric_type": "COSINE",
+                    "intermediate_graph_degree": 64,
+                    "graph_degree": 32,
+                    "itopk_size": 115,
+                    "team_size": 0,
+                    "search_width": 1,
+                    "min_iterations": 0,
+                    "max_iterations": 32,
+                    "build_algo": "NN_DESCENT",
+                    "nn_descent_niter": 100,
+                    "cache_dataset_on_device": "false",
+                    "refine_ratio": 1.0
+                },
+                "case_config": {
+                    "case_id": 5,
+                    "custom_case": {}
+                }
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 343.7366,
+                "qps": 4010.827,
+                "serial_latency_p99": 0.0037,
+                "recall": 0.9828,
+                "conc_num_list": [
+                    1,
+                    50,
+                    100,
+                    150,
+                    200,
+                    250,
+                    300,
+                    350,
+                    400,
+                    450
+                ],
+                "conc_qps_list": [
+                    389.9796,
+                    2438.954,
+                    2901.2404,
+                    3199.2222,
+                    3405.2091,
+                    3550.5948,
+                    3698.1998,
+                    3870.7451,
+                    3957.9605,
+                    4010.827
+                ],
+                "conc_latency_p99_list": [
+                    0.002340950564708328,
+                    0.009426994247856783,
+                    0.012488224396746591,
+                    0.015918733786057054,
+                    0.018884037805241678,
+                    0.021124531388434113,
+                    0.022304366124304944,
+                    0.027822012033261123,
+                    0.03047007061826844,
+                    0.030461367351077566
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "high-conc-iter-32-ef-120-sw-1-nn-100",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "GPU_CAGRA",
+                    "metric_type": "COSINE",
+                    "intermediate_graph_degree": 64,
+                    "graph_degree": 32,
+                    "itopk_size": 120,
+                    "team_size": 0,
+                    "search_width": 1,
+                    "min_iterations": 0,
+                    "max_iterations": 32,
+                    "build_algo": "NN_DESCENT",
+                    "nn_descent_niter": 100,
+                    "cache_dataset_on_device": "false",
+                    "refine_ratio": 1.0
+                },
+                "case_config": {
+                    "case_id": 5,
+                    "custom_case": {}
+                }
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 343.7366,
+                "qps": 3977.1478,
+                "serial_latency_p99": 0.0036,
+                "recall": 0.9846,
+                "conc_num_list": [
+                    1,
+                    50,
+                    100,
+                    150,
+                    200,
+                    250,
+                    300,
+                    350,
+                    400,
+                    450
+                ],
+                "conc_qps_list": [
+                    388.7907,
+                    2424.742,
+                    2855.8397,
+                    3156.8646,
+                    3345.2809,
+                    3499.7379,
+                    3683.6583,
+                    3811.8442,
+                    3928.6721,
+                    3977.1478
+                ],
+                "conc_latency_p99_list": [
+                    0.0023504250287573088,
+                    0.009956407394255802,
+                    0.01293928438971816,
+                    0.016705874516725817,
+                    0.020804059019550913,
+                    0.020919055586888134,
+                    0.026694623782564667,
+                    0.028875598164277472,
+                    0.02824069199525511,
+                    0.03465504789107726
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "high-conc-iter-34-ef-100-sw-1-nn-100",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "GPU_CAGRA",
+                    "metric_type": "COSINE",
+                    "intermediate_graph_degree": 64,
+                    "graph_degree": 32,
+                    "itopk_size": 100,
+                    "team_size": 0,
+                    "search_width": 1,
+                    "min_iterations": 0,
+                    "max_iterations": 34,
+                    "build_algo": "NN_DESCENT",
+                    "nn_descent_niter": 100,
+                    "cache_dataset_on_device": "false",
+                    "refine_ratio": 1.0
+                },
+                "case_config": {
+                    "case_id": 5,
+                    "custom_case": {}
+                }
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 343.7366,
+                "qps": 3990.248,
+                "serial_latency_p99": 0.0037,
+                "recall": 0.9848,
+                "conc_num_list": [
+                    1,
+                    50,
+                    100,
+                    150,
+                    200,
+                    250,
+                    300,
+                    350,
+                    400,
+                    450
+                ],
+                "conc_qps_list": [
+                    383.2331,
+                    2426.6386,
+                    2851.2481,
+                    3147.1989,
+                    3359.9838,
+                    3524.2719,
+                    3641.3446,
+                    3826.885,
+                    3876.0568,
+                    3990.248
+                ],
+                "conc_latency_p99_list": [
+                    0.0023711234306683765,
+                    0.01002107762176165,
+                    0.012785233166139732,
+                    0.01675356991403387,
+                    0.02086832213659436,
+                    0.02075379209510356,
+                    0.023371288392568385,
+                    0.029841499422169362,
+                    0.03106598924068967,
+                    0.03348137344429815
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "high-conc-iter-34-ef-105-sw-1-nn-100",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "GPU_CAGRA",
+                    "metric_type": "COSINE",
+                    "intermediate_graph_degree": 64,
+                    "graph_degree": 32,
+                    "itopk_size": 105,
+                    "team_size": 0,
+                    "search_width": 1,
+                    "min_iterations": 0,
+                    "max_iterations": 34,
+                    "build_algo": "NN_DESCENT",
+                    "nn_descent_niter": 100,
+                    "cache_dataset_on_device": "false",
+                    "refine_ratio": 1.0
+                },
+                "case_config": {
+                    "case_id": 5,
+                    "custom_case": {}
+                }
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 343.7366,
+                "qps": 3981.2412,
+                "serial_latency_p99": 0.0037,
+                "recall": 0.9847,
+                "conc_num_list": [
+                    1,
+                    50,
+                    100,
+                    150,
+                    200,
+                    250,
+                    300,
+                    350,
+                    400,
+                    450
+                ],
+                "conc_qps_list": [
+                    387.8564,
+                    2425.4742,
+                    2825.3214,
+                    3163.0393,
+                    3355.0249,
+                    3526.4034,
+                    3655.6425,
+                    3818.2727,
+                    3892.4462,
+                    3981.2412
+                ],
+                "conc_latency_p99_list": [
+                    0.0023488505331624764,
+                    0.009883538460235286,
+                    0.012410805096209515,
+                    0.016950446812312295,
+                    0.019548874190960852,
+                    0.022694127940745965,
+                    0.023366721174360283,
+                    0.02635174233163416,
+                    0.03174203381444022,
+                    0.03272522200295643
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "high-conc-iter-34-ef-110-sw-1-nn-100",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "GPU_CAGRA",
+                    "metric_type": "COSINE",
+                    "intermediate_graph_degree": 64,
+                    "graph_degree": 32,
+                    "itopk_size": 110,
+                    "team_size": 0,
+                    "search_width": 1,
+                    "min_iterations": 0,
+                    "max_iterations": 34,
+                    "build_algo": "NN_DESCENT",
+                    "nn_descent_niter": 100,
+                    "cache_dataset_on_device": "false",
+                    "refine_ratio": 1.0
+                },
+                "case_config": {
+                    "case_id": 5,
+                    "custom_case": {}
+                }
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 343.7366,
+                "qps": 4000.8889,
+                "serial_latency_p99": 0.0038,
+                "recall": 0.985,
+                "conc_num_list": [
+                    1,
+                    50,
+                    100,
+                    150,
+                    200,
+                    250,
+                    300,
+                    350,
+                    400,
+                    450
+                ],
+                "conc_qps_list": [
+                    388.349,
+                    2402.1691,
+                    2842.3095,
+                    3160.0617,
+                    3342.2969,
+                    3491.9075,
+                    3691.7967,
+                    3875.3824,
+                    3894.256,
+                    4000.8889
+                ],
+                "conc_latency_p99_list": [
+                    0.0023525454899758188,
+                    0.009958297524146837,
+                    0.01269325676880544,
+                    0.01702489067509159,
+                    0.019269405997662397,
+                    0.020885411067987296,
+                    0.02485339037182275,
+                    0.030218320809283977,
+                    0.030454432399116913,
+                    0.03273006346451002
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "high-conc-iter-34-ef-115-sw-1-nn-100",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "GPU_CAGRA",
+                    "metric_type": "COSINE",
+                    "intermediate_graph_degree": 64,
+                    "graph_degree": 32,
+                    "itopk_size": 115,
+                    "team_size": 0,
+                    "search_width": 1,
+                    "min_iterations": 0,
+                    "max_iterations": 34,
+                    "build_algo": "NN_DESCENT",
+                    "nn_descent_niter": 100,
+                    "cache_dataset_on_device": "false",
+                    "refine_ratio": 1.0
+                },
+                "case_config": {
+                    "case_id": 5,
+                    "custom_case": {}
+                }
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 343.7366,
+                "qps": 4002.6005,
+                "serial_latency_p99": 0.0038,
+                "recall": 0.9847,
+                "conc_num_list": [
+                    1,
+                    50,
+                    100,
+                    150,
+                    200,
+                    250,
+                    300,
+                    350,
+                    400,
+                    450
+                ],
+                "conc_qps_list": [
+                    385.6562,
+                    2404.7177,
+                    2840.9048,
+                    3143.0187,
+                    3329.8868,
+                    3482.9411,
+                    3671.3648,
+                    3808.174,
+                    3988.2019,
+                    4002.6005
+                ],
+                "conc_latency_p99_list": [
+                    0.002354223933551839,
+                    0.00990301292153599,
+                    0.012770440968241018,
+                    0.01659664482173139,
+                    0.020099083286413588,
+                    0.021746004655611977,
+                    0.023819199233117976,
+                    0.02646289766442642,
+                    0.03177195209025376,
+                    0.03160429857076087
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "high-conc-iter-34-ef-120-sw-1-nn-100",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "GPU_CAGRA",
+                    "metric_type": "COSINE",
+                    "intermediate_graph_degree": 64,
+                    "graph_degree": 32,
+                    "itopk_size": 120,
+                    "team_size": 0,
+                    "search_width": 1,
+                    "min_iterations": 0,
+                    "max_iterations": 34,
+                    "build_algo": "NN_DESCENT",
+                    "nn_descent_niter": 100,
+                    "cache_dataset_on_device": "false",
+                    "refine_ratio": 1.0
+                },
+                "case_config": {
+                    "case_id": 5,
+                    "custom_case": {}
+                }
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 343.7366,
+                "qps": 3940.5992,
+                "serial_latency_p99": 0.0036,
+                "recall": 0.9857,
+                "conc_num_list": [
+                    1,
+                    50,
+                    100,
+                    150,
+                    200,
+                    250,
+                    300,
+                    350,
+                    400,
+                    450
+                ],
+                "conc_qps_list": [
+                    379.2876,
+                    2369.2542,
+                    2827.3189,
+                    3102.2086,
+                    3318.5479,
+                    3513.4674,
+                    3622.8401,
+                    3773.4683,
+                    3870.9206,
+                    3940.5992
+                ],
+                "conc_latency_p99_list": [
+                    0.0023976776704512305,
+                    0.009667886322599952,
+                    0.012816349769890075,
+                    0.01691383450445792,
+                    0.019384440618936787,
+                    0.023589599939911568,
+                    0.025068333363446434,
+                    0.02837151163988892,
+                    0.03213991863984847,
+                    0.036678896320401694
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "high-conc-iter-36-ef-100-sw-1-nn-100",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "GPU_CAGRA",
+                    "metric_type": "COSINE",
+                    "intermediate_graph_degree": 64,
+                    "graph_degree": 32,
+                    "itopk_size": 100,
+                    "team_size": 0,
+                    "search_width": 1,
+                    "min_iterations": 0,
+                    "max_iterations": 36,
+                    "build_algo": "NN_DESCENT",
+                    "nn_descent_niter": 100,
+                    "cache_dataset_on_device": "false",
+                    "refine_ratio": 1.0
+                },
+                "case_config": {
+                    "case_id": 5,
+                    "custom_case": {}
+                }
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 343.7366,
+                "qps": 3965.0309,
+                "serial_latency_p99": 0.0037,
+                "recall": 0.9857,
+                "conc_num_list": [
+                    1,
+                    50,
+                    100,
+                    150,
+                    200,
+                    250,
+                    300,
+                    350,
+                    400,
+                    450
+                ],
+                "conc_qps_list": [
+                    382.4726,
+                    2390.49,
+                    2820.0306,
+                    3154.6982,
+                    3353.4234,
+                    3516.0131,
+                    3651.311,
+                    3771.2097,
+                    3922.467,
+                    3965.0309
+                ],
+                "conc_latency_p99_list": [
+                    0.0023810684924712405,
+                    0.009829242760315538,
+                    0.012680647997906636,
+                    0.016822470784311736,
+                    0.020079113044196857,
+                    0.022112051949814485,
+                    0.024757027598434796,
+                    0.029384574427500774,
+                    0.03080608098143639,
+                    0.032591363708833525
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "high-conc-iter-36-ef-105-sw-1-nn-100",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "GPU_CAGRA",
+                    "metric_type": "COSINE",
+                    "intermediate_graph_degree": 64,
+                    "graph_degree": 32,
+                    "itopk_size": 105,
+                    "team_size": 0,
+                    "search_width": 1,
+                    "min_iterations": 0,
+                    "max_iterations": 36,
+                    "build_algo": "NN_DESCENT",
+                    "nn_descent_niter": 100,
+                    "cache_dataset_on_device": "false",
+                    "refine_ratio": 1.0
+                },
+                "case_config": {
+                    "case_id": 5,
+                    "custom_case": {}
+                }
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 343.7366,
+                "qps": 3950.5432,
+                "serial_latency_p99": 0.0036,
+                "recall": 0.9858,
+                "conc_num_list": [
+                    1,
+                    50,
+                    100,
+                    150,
+                    200,
+                    250,
+                    300,
+                    350,
+                    400,
+                    450
+                ],
+                "conc_qps_list": [
+                    382.0525,
+                    2393.0752,
+                    2805.0818,
+                    3106.0116,
+                    3286.1559,
+                    3507.2855,
+                    3677.4779,
+                    3789.7934,
+                    3936.7987,
+                    3950.5432
+                ],
+                "conc_latency_p99_list": [
+                    0.0023797109587379963,
+                    0.00978295735680149,
+                    0.012769842482008971,
+                    0.016256326854119835,
+                    0.019118819413361052,
+                    0.02268849538930226,
+                    0.02531335882114072,
+                    0.02839015917514189,
+                    0.03186582456882097,
+                    0.03394136729284946
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "high-conc-iter-36-ef-110-sw-1-nn-100",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "GPU_CAGRA",
+                    "metric_type": "COSINE",
+                    "intermediate_graph_degree": 64,
+                    "graph_degree": 32,
+                    "itopk_size": 110,
+                    "team_size": 0,
+                    "search_width": 1,
+                    "min_iterations": 0,
+                    "max_iterations": 36,
+                    "build_algo": "NN_DESCENT",
+                    "nn_descent_niter": 100,
+                    "cache_dataset_on_device": "false",
+                    "refine_ratio": 1.0
+                },
+                "case_config": {
+                    "case_id": 5,
+                    "custom_case": {}
+                }
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 343.7366,
+                "qps": 3989.3199,
+                "serial_latency_p99": 0.0039,
+                "recall": 0.9858,
+                "conc_num_list": [
+                    1,
+                    50,
+                    100,
+                    150,
+                    200,
+                    250,
+                    300,
+                    350,
+                    400,
+                    450
+                ],
+                "conc_qps_list": [
+                    386.4159,
+                    2364.961,
+                    2820.9935,
+                    3123.981,
+                    3324.8346,
+                    3476.947,
+                    3616.1882,
+                    3758.1276,
+                    3868.7744,
+                    3989.3199
+                ],
+                "conc_latency_p99_list": [
+                    0.0023645356294800875,
+                    0.009678291886244552,
+                    0.012670090616168453,
+                    0.016443657051073386,
+                    0.019319618939681094,
+                    0.020977015751799624,
+                    0.024321733580934233,
+                    0.02714826026629453,
+                    0.031209665475063958,
+                    0.03695316601658851
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "high-conc-iter-36-ef-115-sw-1-nn-100",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "GPU_CAGRA",
+                    "metric_type": "COSINE",
+                    "intermediate_graph_degree": 64,
+                    "graph_degree": 32,
+                    "itopk_size": 115,
+                    "team_size": 0,
+                    "search_width": 1,
+                    "min_iterations": 0,
+                    "max_iterations": 36,
+                    "build_algo": "NN_DESCENT",
+                    "nn_descent_niter": 100,
+                    "cache_dataset_on_device": "false",
+                    "refine_ratio": 1.0
+                },
+                "case_config": {
+                    "case_id": 5,
+                    "custom_case": {}
+                }
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 343.7366,
+                "qps": 4019.7556,
+                "serial_latency_p99": 0.0036,
+                "recall": 0.9857,
+                "conc_num_list": [
+                    1,
+                    50,
+                    100,
+                    150,
+                    200,
+                    250,
+                    300,
+                    350,
+                    400,
+                    450
+                ],
+                "conc_qps_list": [
+                    387.6813,
+                    2347.5149,
+                    2824.098,
+                    3127.6951,
+                    3342.8521,
+                    3501.7627,
+                    3678.7346,
+                    3774.7492,
+                    3921.5952,
+                    4019.7556
+                ],
+                "conc_latency_p99_list": [
+                    0.0023595161260054737,
+                    0.00920618656881561,
+                    0.012764106124348473,
+                    0.01697235189538187,
+                    0.01946953308492375,
+                    0.0213076155842733,
+                    0.025801728839162385,
+                    0.03066554014199792,
+                    0.02902712256571976,
+                    0.035776090166155336
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "high-conc-iter-36-ef-120-sw-1-nn-100",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "GPU_CAGRA",
+                    "metric_type": "COSINE",
+                    "intermediate_graph_degree": 64,
+                    "graph_degree": 32,
+                    "itopk_size": 120,
+                    "team_size": 0,
+                    "search_width": 1,
+                    "min_iterations": 0,
+                    "max_iterations": 36,
+                    "build_algo": "NN_DESCENT",
+                    "nn_descent_niter": 100,
+                    "cache_dataset_on_device": "false",
+                    "refine_ratio": 1.0
+                },
+                "case_config": {
+                    "case_id": 5,
+                    "custom_case": {}
+                }
+            },
+            "label": ":)"
+        }
+    ],
+    "file_fmt": "result_{}_{}_{}.json"
+}
