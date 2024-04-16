@@ -73,10 +73,10 @@ def drawChart(data, st):
     fig.update_yaxes(range=yrange, title_text="QPS")
     fig.update_traces(textposition="bottom right",
                       texttemplate="conc-%{text:,.4~r}")
-    fig.update_layout(
-        margin=dict(l=0, r=0, t=40, b=0, pad=8),
-        legend=dict(
-            orientation="h", yanchor="bottom", y=1, xanchor="right", x=1, title=""
-        ),
-    )
+    # fig.update_layout(
+    #     margin=dict(l=0, r=0, t=40, b=0, pad=8),
+    #     legend=dict(
+    #         orientation="h", yanchor="bottom", y=1, xanchor="right", x=1, title=""
+    #     ),
+    # )
     st.plotly_chart(fig, use_container_width=True,)
