@@ -1,14 +1,15 @@
 from vectordb_bench.backend.cases import Case
 from vectordb_bench.frontend.components.check_results.data import getChartData
-from vectordb_bench.frontend.components.check_results.expanderStyle import initSidebarExanderStyle
-from vectordb_bench.frontend.config.dbCaseConfigs import CASE_NAME_ORDER
-from vectordb_bench.frontend.config.styles import *
+from vectordb_bench.frontend.components.check_results.expanderStyle import (
+    initSidebarExanderStyle,
+)
+from vectordb_bench.frontend.config.styles import SIDEBAR_CONTROL_COLUMNS
 import streamlit as st
 
 from vectordb_bench.models import CaseResult, TestResult
 
 
-def getshownData(results: list[TestResult], st):
+def getshownData(st, results: list[TestResult], display_case_name_order: list[str]):
     # hide the nav
     st.markdown(
         "<style> div[data-testid='stSidebarNav'] {display: none;} </style>",
@@ -17,16 +18,17 @@ def getshownData(results: list[TestResult], st):
 
     st.header("Filters")
 
-    shownResults = getshownResults(results, st)
-    showDBNames, showCaseNames = getShowDbsAndCases(shownResults, st)
+    shownResults = getshownResults(st, results)
+    showDBNames, showCaseNames = getShowDbsAndCases(
+        st, shownResults, display_case_name_order
+    )
 
-    shownData, failedTasks = getChartData(
-        shownResults, showDBNames, showCaseNames)
+    shownData, failedTasks = getChartData(shownResults, showDBNames, showCaseNames)
 
     return shownData, failedTasks, showCaseNames
 
 
-def getshownResults(results: list[TestResult], st) -> list[CaseResult]:
+def getshownResults(st, results: list[TestResult]) -> list[CaseResult]:
     resultSelectOptions = [
         result.task_label
         if result.task_label != result.run_id
@@ -53,19 +55,24 @@ def getshownResults(results: list[TestResult], st) -> list[CaseResult]:
     return selectedResult
 
 
-def getShowDbsAndCases(result: list[CaseResult], st) -> tuple[list[str], list[str]]:
+def getShowDbsAndCases(
+    st, result: list[CaseResult], display_case_name_order
+) -> tuple[list[str], list[str]]:
     initSidebarExanderStyle(st)
     allDbNames = list(set({res.task_config.db_name for res in result}))
     allDbNames.sort()
     allCases: list[Case] = [
         res.task_config.case_config.case_id.case_cls(
-            res.task_config.case_config.custom_case)
+            res.task_config.case_config.custom_case
+        )
         for res in result
     ]
     allCaseNameSet = set({case.name for case in allCases})
-    allCaseNames = [case_name for case_name in CASE_NAME_ORDER if case_name in allCaseNameSet] + \
-        [case_name for case_name in allCaseNameSet if case_name not in CASE_NAME_ORDER]
-
+    allCaseNames = [
+        case_name
+        for case_name in display_case_name_order
+        if case_name in allCaseNameSet
+    ]
     # DB Filter
     dbFilterContainer = st.container()
     showDBNames = filterView(
@@ -120,8 +127,7 @@ def filterView(container, header, options, col, optionLables=None):
     )
     if optionLables is None:
         optionLables = options
-    isActive = {option: st.session_state[selectAllState]
-                for option in optionLables}
+    isActive = {option: st.session_state[selectAllState] for option in optionLables}
     for i, option in enumerate(optionLables):
         isActive[option] = columns[i % col].checkbox(
             optionLables[i],

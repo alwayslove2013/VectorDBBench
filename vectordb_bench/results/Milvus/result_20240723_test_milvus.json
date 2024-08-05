@@ -1,0 +1,493 @@
+{
+    "run_id": "b5db70bac69d48569b5df1eb69326ee3",
+    "task_label": "test",
+    "results": [
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 0.0,
+                "qps": 6356.1596,
+                "serial_latency_p99": 0.0028,
+                "recall": 0.99,
+                "ndcg": 0.9918,
+                "conc_num_list": [
+                    10
+                ],
+                "conc_qps_list": [
+                    6356.1596
+                ],
+                "conc_latency_p99_list": [
+                    0.0010720944307744504
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "shuffle",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "HNSW",
+                    "metric_type": "COSINE",
+                    "M": 30,
+                    "efConstruction": 360,
+                    "ef": 100
+                },
+                "case_config": {
+                    "case_id": 102,
+                    "custom_case": {
+                        "dataset_with_size_type": "Medium Cohere (768dim, 1M)",
+                        "label_percentage": 0.001
+                    },
+                    "k": 100,
+                    "concurrency_search_config": {
+                        "num_concurrency": [
+                            10
+                        ],
+                        "concurrency_duration": 30
+                    }
+                },
+                "stages": [
+                    "drop_old",
+                    "load",
+                    "search_serial",
+                    "search_concurrent"
+                ]
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 0.0,
+                "qps": 6434.3303,
+                "serial_latency_p99": 0.0028,
+                "recall": 0.938,
+                "ndcg": 0.9465,
+                "conc_num_list": [
+                    10
+                ],
+                "conc_qps_list": [
+                    6434.3303
+                ],
+                "conc_latency_p99_list": [
+                    0.001032950559258461
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "shuffle",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "HNSW",
+                    "metric_type": "COSINE",
+                    "M": 30,
+                    "efConstruction": 360,
+                    "ef": 100
+                },
+                "case_config": {
+                    "case_id": 102,
+                    "custom_case": {
+                        "dataset_with_size_type": "Medium Cohere (768dim, 1M)",
+                        "label_percentage": 0.002
+                    },
+                    "k": 100,
+                    "concurrency_search_config": {
+                        "num_concurrency": [
+                            10
+                        ],
+                        "concurrency_duration": 30
+                    }
+                },
+                "stages": [
+                    "drop_old",
+                    "load",
+                    "search_serial",
+                    "search_concurrent"
+                ]
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 0.0,
+                "qps": 6110.2108,
+                "serial_latency_p99": 0.0029,
+                "recall": 0.9301,
+                "ndcg": 0.9399,
+                "conc_num_list": [
+                    10
+                ],
+                "conc_qps_list": [
+                    6110.2108
+                ],
+                "conc_latency_p99_list": [
+                    0.001106204753369093
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "shuffle",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "HNSW",
+                    "metric_type": "COSINE",
+                    "M": 30,
+                    "efConstruction": 360,
+                    "ef": 100
+                },
+                "case_config": {
+                    "case_id": 102,
+                    "custom_case": {
+                        "dataset_with_size_type": "Medium Cohere (768dim, 1M)",
+                        "label_percentage": 0.005
+                    },
+                    "k": 100,
+                    "concurrency_search_config": {
+                        "num_concurrency": [
+                            10
+                        ],
+                        "concurrency_duration": 30
+                    }
+                },
+                "stages": [
+                    "drop_old",
+                    "load",
+                    "search_serial",
+                    "search_concurrent"
+                ]
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 0.0,
+                "qps": 5816.4559,
+                "serial_latency_p99": 0.0028,
+                "recall": 0.9695,
+                "ndcg": 0.9749,
+                "conc_num_list": [
+                    10
+                ],
+                "conc_qps_list": [
+                    5816.4559
+                ],
+                "conc_latency_p99_list": [
+                    0.001160949468612671
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "shuffle",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "HNSW",
+                    "metric_type": "COSINE",
+                    "M": 30,
+                    "efConstruction": 360,
+                    "ef": 100
+                },
+                "case_config": {
+                    "case_id": 102,
+                    "custom_case": {
+                        "dataset_with_size_type": "Medium Cohere (768dim, 1M)",
+                        "label_percentage": 0.01
+                    },
+                    "k": 100,
+                    "concurrency_search_config": {
+                        "num_concurrency": [
+                            10
+                        ],
+                        "concurrency_duration": 30
+                    }
+                },
+                "stages": [
+                    "drop_old",
+                    "load",
+                    "search_serial",
+                    "search_concurrent"
+                ]
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 0.0,
+                "qps": 5481.0983,
+                "serial_latency_p99": 0.0031,
+                "recall": 0.9584,
+                "ndcg": 0.9656,
+                "conc_num_list": [
+                    10
+                ],
+                "conc_qps_list": [
+                    5481.0983
+                ],
+                "conc_latency_p99_list": [
+                    0.0012512041836977004
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "shuffle",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "HNSW",
+                    "metric_type": "COSINE",
+                    "M": 30,
+                    "efConstruction": 360,
+                    "ef": 100
+                },
+                "case_config": {
+                    "case_id": 102,
+                    "custom_case": {
+                        "dataset_with_size_type": "Medium Cohere (768dim, 1M)",
+                        "label_percentage": 0.02
+                    },
+                    "k": 100,
+                    "concurrency_search_config": {
+                        "num_concurrency": [
+                            10
+                        ],
+                        "concurrency_duration": 30
+                    }
+                },
+                "stages": [
+                    "drop_old",
+                    "load",
+                    "search_serial",
+                    "search_concurrent"
+                ]
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 0.0,
+                "qps": 4704.1764,
+                "serial_latency_p99": 0.0033,
+                "recall": 0.9427,
+                "ndcg": 0.9518,
+                "conc_num_list": [
+                    10
+                ],
+                "conc_qps_list": [
+                    4704.1764
+                ],
+                "conc_latency_p99_list": [
+                    0.0014758364398032428
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "shuffle",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "HNSW",
+                    "metric_type": "COSINE",
+                    "M": 30,
+                    "efConstruction": 360,
+                    "ef": 100
+                },
+                "case_config": {
+                    "case_id": 102,
+                    "custom_case": {
+                        "dataset_with_size_type": "Medium Cohere (768dim, 1M)",
+                        "label_percentage": 0.05
+                    },
+                    "k": 100,
+                    "concurrency_search_config": {
+                        "num_concurrency": [
+                            10
+                        ],
+                        "concurrency_duration": 30
+                    }
+                },
+                "stages": [
+                    "drop_old",
+                    "load",
+                    "search_serial",
+                    "search_concurrent"
+                ]
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 0.0,
+                "qps": 4225.0494,
+                "serial_latency_p99": 0.0039,
+                "recall": 0.9317,
+                "ndcg": 0.9421,
+                "conc_num_list": [
+                    10
+                ],
+                "conc_qps_list": [
+                    4225.0494
+                ],
+                "conc_latency_p99_list": [
+                    0.001738075878471136
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "shuffle",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "HNSW",
+                    "metric_type": "COSINE",
+                    "M": 30,
+                    "efConstruction": 360,
+                    "ef": 100
+                },
+                "case_config": {
+                    "case_id": 102,
+                    "custom_case": {
+                        "dataset_with_size_type": "Medium Cohere (768dim, 1M)",
+                        "label_percentage": 0.1
+                    },
+                    "k": 100,
+                    "concurrency_search_config": {
+                        "num_concurrency": [
+                            10
+                        ],
+                        "concurrency_duration": 30
+                    }
+                },
+                "stages": [
+                    "drop_old",
+                    "load",
+                    "search_serial",
+                    "search_concurrent"
+                ]
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 0.0,
+                "qps": 3326.3479,
+                "serial_latency_p99": 0.004,
+                "recall": 0.9232,
+                "ndcg": 0.935,
+                "conc_num_list": [
+                    10
+                ],
+                "conc_qps_list": [
+                    3326.3479
+                ],
+                "conc_latency_p99_list": [
+                    0.002286043243482709
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "shuffle",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "HNSW",
+                    "metric_type": "COSINE",
+                    "M": 30,
+                    "efConstruction": 360,
+                    "ef": 100
+                },
+                "case_config": {
+                    "case_id": 102,
+                    "custom_case": {
+                        "dataset_with_size_type": "Medium Cohere (768dim, 1M)",
+                        "label_percentage": 0.2
+                    },
+                    "k": 100,
+                    "concurrency_search_config": {
+                        "num_concurrency": [
+                            10
+                        ],
+                        "concurrency_duration": 30
+                    }
+                },
+                "stages": [
+                    "drop_old",
+                    "load",
+                    "search_serial",
+                    "search_concurrent"
+                ]
+            },
+            "label": ":)"
+        },
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "load_duration": 0.0,
+                "qps": 1686.7546,
+                "serial_latency_p99": 0.0049,
+                "recall": 0.9484,
+                "ndcg": 0.955,
+                "conc_num_list": [
+                    10
+                ],
+                "conc_qps_list": [
+                    1686.7546
+                ],
+                "conc_latency_p99_list": [
+                    0.0034006748493760823
+                ]
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "shuffle",
+                    "uri": "**********"
+                },
+                "db_case_config": {
+                    "index": "HNSW",
+                    "metric_type": "COSINE",
+                    "M": 30,
+                    "efConstruction": 360,
+                    "ef": 100
+                },
+                "case_config": {
+                    "case_id": 102,
+                    "custom_case": {
+                        "dataset_with_size_type": "Medium Cohere (768dim, 1M)",
+                        "label_percentage": 0.5
+                    },
+                    "k": 100,
+                    "concurrency_search_config": {
+                        "num_concurrency": [
+                            10
+                        ],
+                        "concurrency_duration": 30
+                    }
+                },
+                "stages": [
+                    "drop_old",
+                    "load",
+                    "search_serial",
+                    "search_concurrent"
+                ]
+            },
+            "label": ":)"
+        }
+    ],
+    "file_fmt": "result_{}_{}_{}.json"
+}

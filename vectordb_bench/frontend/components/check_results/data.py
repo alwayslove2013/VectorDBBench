@@ -1,6 +1,5 @@
 from collections import defaultdict
 from dataclasses import asdict
-from vectordb_bench.backend.cases import Case
 from vectordb_bench.metric import isLowerIsBetterMetric
 from vectordb_bench.models import CaseResult, ResultLabel
 
@@ -24,10 +23,7 @@ def getFilterTasks(
         task
         for task in tasks
         if task.task_config.db_name in dbNames
-        and task.task_config.case_config.case_id.case_cls(
-            task.task_config.case_config.custom_case
-        ).name
-        in caseNames
+        and task.task_config.case_config.case_name in caseNames
     ]
     return filterTasks
 
@@ -39,19 +35,17 @@ def mergeTasks(tasks: list[CaseResult]):
         db = task.task_config.db.value
         db_label = task.task_config.db_config.db_label or ""
         version = task.task_config.db_config.version or ""
-        case = task.task_config.case_config.case_id.case_cls(
-            task.task_config.case_config.custom_case
-        )
-        dbCaseMetricsMap[db_name][case.name] = {
+        case_name = task.task_config.case_config.case_name
+        dbCaseMetricsMap[db_name][case_name] = {
             "db": db,
             "db_label": db_label,
             "version": version,
             "metrics": mergeMetrics(
-                dbCaseMetricsMap[db_name][case.name].get("metrics", {}),
+                dbCaseMetricsMap[db_name][case_name].get("metrics", {}),
                 asdict(task.metrics),
             ),
             "label": getBetterLabel(
-                dbCaseMetricsMap[db_name][case.name].get("label", ResultLabel.FAILED),
+                dbCaseMetricsMap[db_name][case_name].get("label", ResultLabel.FAILED),
                 task.label,
             ),
         }
