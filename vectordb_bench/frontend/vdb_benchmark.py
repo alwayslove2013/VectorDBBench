@@ -1,5 +1,6 @@
 import streamlit as st
 from vectordb_bench.backend.cases import CaseType
+from vectordb_bench.backend.filters import FilterType
 from vectordb_bench.frontend.components.check_results.footer import footer
 from vectordb_bench.frontend.components.check_results.stPageConfig import (
     initResultsPageConfig,
@@ -31,21 +32,8 @@ def main():
 
     # results selector and filter
     resultSelectorContainer = st.sidebar.container()
-    display_case_name_order = [
-        case_type.case_name()
-        for case_type in [
-            CaseType.Performance768D100M,
-            CaseType.Performance768D10M,
-            CaseType.Performance768D1M,
-            CaseType.Performance1536D5M,
-            CaseType.Performance1536D500K,
-            CaseType.Performance1536D50K,
-            CaseType.CapacityDim960,
-            CaseType.CapacityDim128,
-        ]
-    ]
     shownData, failedTasks, showCaseNames = getshownData(
-        resultSelectorContainer, allResults, display_case_name_order
+        resultSelectorContainer, allResults, filter_type=FilterType.NonFilter
     )
 
     resultSelectorContainer.divider()

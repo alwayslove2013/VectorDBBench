@@ -1,4 +1,5 @@
 import streamlit as st
+from vectordb_bench.backend.filters import FilterType
 from vectordb_bench.frontend.components.check_results.footer import footer
 from vectordb_bench.frontend.components.check_results.stPageConfig import (
     initResultsPageConfig,
@@ -31,10 +32,9 @@ def main():
     )
 
     # results selector and filter
-    display_case_name_order = []
     resultSelectorContainer = st.sidebar.container()
     shownData, failedTasks, showCaseNames = getshownData(
-        resultSelectorContainer, allResults, display_case_name_order
+        resultSelectorContainer, allResults, filter_type=FilterType.Label
     )
 
     resultSelectorContainer.divider()
