@@ -52,6 +52,10 @@ class BaseDataset(BaseModel):
         return self._size_label.get(self.size).label
 
     @property
+    def full_name(self) -> str:
+        return f"{self.name.capitalize()} ({self.label.capitalize()})"
+
+    @property
     def dir_name(self) -> str:
         return f"{self.name}_{self.label}_{utils.numerize(self.size)}".lower()
 

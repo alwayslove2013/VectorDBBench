@@ -1,7 +1,12 @@
-from vectordb_bench.backend.cases import Case
-from vectordb_bench.frontend.components.check_results.expanderStyle import initMainExpanderStyle
+from vectordb_bench.frontend.components.check_results.expanderStyle import (
+    initMainExpanderStyle,
+)
 from vectordb_bench.metric import metricOrder, isLowerIsBetterMetric, metricUnitMap
-from vectordb_bench.frontend.config.styles import *
+from vectordb_bench.frontend.config.styles import (
+    COLOR_MAP,
+    PATTERN_SHAPES,
+    getPatternShape,
+)
 from vectordb_bench.models import ResultLabel
 import plotly.express as px
 

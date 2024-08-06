@@ -9,9 +9,10 @@ from vectordb_bench.frontend.components.check_results.nav import (
     NavToQuriesPerDollar,
     NavToRunTest,
 )
-from vectordb_bench.frontend.components.check_results.charts import drawCharts
+from vectordb_bench.frontend.components.filter.charts import drawCharts
 from vectordb_bench.frontend.components.check_results.filters import getshownData
 from vectordb_bench.frontend.components.get_results.saveAsImage import getResults
+from vectordb_bench.frontend.config.styles import FAVICON
 
 # from vectordb_bench.frontend.config.styles import *
 from vectordb_bench.interface import benchMarkRunner
@@ -19,17 +20,19 @@ from vectordb_bench.interface import benchMarkRunner
 
 def main():
     # set page config
-    initResultsPageConfig(st)
+    st.set_page_config(
+        page_title="Label Filter",
+        page_icon=FAVICON,
+        layout="wide",
+        # initial_sidebar_state="collapsed",
+    )
 
     # header
     drawHeaderIcon(st)
 
     allResults = benchMarkRunner.get_results()
 
-    st.title("Vector Database Benchmark")
-    st.caption(
-        "Note that all testing was completed in July 2023, except for the times already noted."
-    )
+    st.title("Vector Database Benchmark (Label Filter)")
 
     # results selector and filter
     resultSelectorContainer = st.sidebar.container()
@@ -43,6 +46,10 @@ def main():
     navContainer = st.sidebar.container()
     NavToRunTest(navContainer)
     NavToQuriesPerDollar(navContainer)
+
+    # charts
+    print(showCaseNames)
+    drawCharts(st, shownData, failedTasks, showCaseNames)
 
     # footer
     footer(st.container())

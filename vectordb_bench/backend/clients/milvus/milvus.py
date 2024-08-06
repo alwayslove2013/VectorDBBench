@@ -51,6 +51,9 @@ class Milvus(VectorDB):
         if drop_old and utility.has_collection(self.collection_name):
             log.info(f"{self.name} client drop_old collection: {self.collection_name}")
             utility.drop_collection(self.collection_name)
+        else:
+            # TODO: maybe need check have no scalar_labels
+            pass
 
         if not utility.has_collection(self.collection_name):
             fields = [
@@ -227,12 +230,19 @@ class Milvus(VectorDB):
                 batch_end_offset = min(
                     batch_start_offset + self.batch_size, len(embeddings)
                 )
-                insert_data = [
-                    metadata[batch_start_offset:batch_end_offset],
-                    metadata[batch_start_offset:batch_end_offset],
-                    embeddings[batch_start_offset:batch_end_offset],
-                    labels_data[batch_start_offset:batch_end_offset],
-                ]
+                if self.with_scalar_labels:
+                    insert_data = [
+                        metadata[batch_start_offset:batch_end_offset],
+                        metadata[batch_start_offset:batch_end_offset],
+                        embeddings[batch_start_offset:batch_end_offset],
+                        labels_data[batch_start_offset:batch_end_offset],
+                    ]
+                else:
+                    insert_data = [
+                        metadata[batch_start_offset:batch_end_offset],
+                        metadata[batch_start_offset:batch_end_offset],
+                        embeddings[batch_start_offset:batch_end_offset],
+                    ]
                 res = self.col.insert(insert_data)
                 insert_count += len(res.primary_keys)
         except MilvusException as e:

@@ -35,11 +35,16 @@ def mergeTasks(tasks: list[CaseResult]):
         db = task.task_config.db.value
         db_label = task.task_config.db_config.db_label or ""
         version = task.task_config.db_config.version or ""
-        case_name = task.task_config.case_config.case_name
+        case = task.task_config.case_config.case
+        case_name = case.name
+        dataset_name = case.dataset.data.full_name
+        filter_rate = case.filters.filter_rate
         dbCaseMetricsMap[db_name][case_name] = {
             "db": db,
             "db_label": db_label,
             "version": version,
+            "dataset_name": dataset_name,
+            "filter_rate": filter_rate,
             "metrics": mergeMetrics(
                 dbCaseMetricsMap[db_name][case_name].get("metrics", {}),
                 asdict(task.metrics),
@@ -59,12 +64,16 @@ def mergeTasks(tasks: list[CaseResult]):
             db_label = metricInfo["db_label"]
             version = metricInfo["version"]
             label = metricInfo["label"]
+            dataset_name = metricInfo["dataset_name"]
+            filter_rate = metricInfo["filter_rate"]
             if label == ResultLabel.NORMAL:
                 mergedTasks.append(
                     {
                         "db_name": db_name,
                         "db": db,
                         "db_label": db_label,
+                        "dataset_name": dataset_name,
+                        "filter_rate": filter_rate,
                         "version": version,
                         "case_name": case_name,
                         "metricsSet": set(metrics.keys()),

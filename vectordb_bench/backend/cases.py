@@ -340,6 +340,7 @@ def metric_type_map(s: str) -> MetricType:
 class LabelFilterPerformanceCase(PerformanceCase):
     case_id: CaseType = CaseType.LabelFilterPerformanceCase
     with_scalar_labels: bool = True
+    dataset_with_size_type: DatasetWithSizeType
 
     def __init__(
         self,
@@ -366,6 +367,7 @@ class LabelFilterPerformanceCase(PerformanceCase):
             optimize_timeout=optimize_timeout,
             filter_rate=filter_rate,
             filters=filter,
+            dataset_with_size_type=dataset_with_size_type,
             **kwargs,
         )
 
