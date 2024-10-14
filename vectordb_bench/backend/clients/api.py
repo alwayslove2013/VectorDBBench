@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 from enum import Enum
-from typing import Any, Type
 from contextlib import contextmanager
 
 from pydantic import BaseModel, validator, SecretStr
@@ -12,6 +11,13 @@ class MetricType(str, Enum):
     L2 = "L2"
     COSINE = "COSINE"
     IP = "IP"
+    HAMMING = "HAMMING"
+
+    def is_binary(self) -> bool:
+        if self in [MetricType.HAMMING]:
+            return True
+        else:
+            return False
 
 
 class IndexType(str, Enum):
@@ -21,6 +27,7 @@ class IndexType(str, Enum):
     IVFFlat = "IVF_FLAT"
     IVFSQ8 = "IVF_SQ8"
     Flat = "FLAT"
+    BINFLAT = "BINFLAT"
     AUTOINDEX = "AUTOINDEX"
     ES_HNSW = "hnsw"
     ES_IVFFlat = "ivfflat"

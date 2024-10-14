@@ -61,9 +61,11 @@ class SerialInsertRunner:
                     f"batch dataset size: {len(all_embeddings)}, {len(all_metadata)}"
                 )
 
-                labels_data = self.dataset.scalar_labels["labels"][
-                    all_metadata
-                ].to_list()
+                labels_data = (
+                    self.dataset.scalar_labels["labels"][all_metadata].to_list()
+                    if self.dataset.data.with_scalar_labels
+                    else []
+                )
 
                 insert_count, error = self.db.insert_embeddings(
                     embeddings=all_embeddings,

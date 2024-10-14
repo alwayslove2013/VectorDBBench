@@ -81,10 +81,10 @@ class MultiProcessingSearchRunner:
                     )
 
         total_dur = round(time.perf_counter() - start_time, 4)
-        log.info(
-            f"{mp.current_process().name:16} search {self.duration}s: "
-            f"actual_dur={total_dur}s, count={count}, qps in this process: {round(count / total_dur, 4):3}"
-        )
+        # log.info(
+        #     f"{mp.current_process().name:16} search {self.duration}s: "
+        #     f"actual_dur={total_dur}s, count={count}, qps in this process: {round(count / total_dur, 4):3}"
+        # )
 
         return (count, total_dur, latencies)
 

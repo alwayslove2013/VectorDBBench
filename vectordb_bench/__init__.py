@@ -18,14 +18,15 @@ class config:
     DEFAULT_DATASET_URL = env.str("DEFAULT_DATASET_URL", AWS_S3_URL)
     # DATASET_LOCAL_DIR = env.path("DATASET_LOCAL_DIR", "/tmp/vectordb_bench/dataset")
     DATASET_LOCAL_DIR = env.path("DATASET_LOCAL_DIR", "/home/nas/milvus/tianmin")
+    # DATASET_LOCAL_DIR = env.path("DATASET_LOCAL_DIR", "/home/nas/milvus/hybrid_search")
     NUM_PER_BATCH = env.int("NUM_PER_BATCH", 5000)
 
     DROP_OLD = env.bool("DROP_OLD", True)
     USE_SHUFFLED_DATA = env.bool("USE_SHUFFLED_DATA", False)
 
-    NUM_CONCURRENCY = env.list("NUM_CONCURRENCY",  [10], subcast=int)
+    NUM_CONCURRENCY = env.list("NUM_CONCURRENCY",  [1, 10, 20, 40, 60, 80, 100, 120], subcast=int)
 
-    CONCURRENCY_DURATION = 30
+    CONCURRENCY_DURATION = 60
 
     RESULTS_LOCAL_DIR = env.path(
         "RESULTS_LOCAL_DIR", pathlib.Path(__file__).parent.joinpath("results")

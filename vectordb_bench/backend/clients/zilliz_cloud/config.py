@@ -5,9 +5,11 @@ from ..milvus.config import MilvusIndexConfig, IndexType
 
 
 class ZillizCloudConfig(DBConfig):
-    uri: SecretStr
-    user: str
-    password: SecretStr
+    uri: SecretStr = (
+        "https://in01-9024610b4458ba9.aws-us-west-2.vectordb-uat3.zillizcloud.com:19530"
+    )
+    user: str = "db_admin"
+    password: SecretStr = "Milvus123"
 
     def to_dict(self) -> dict:
         return {
@@ -33,7 +35,5 @@ class AutoIndexConfig(MilvusIndexConfig, DBCaseConfig):
             "metric_type": self.parse_metric(),
             "params": {
                 "level": self.level,
-            }
+            },
         }
-
-

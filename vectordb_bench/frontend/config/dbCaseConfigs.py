@@ -4,7 +4,11 @@ from pydantic import BaseModel
 from vectordb_bench.backend.cases import CaseLabel, CaseType
 from vectordb_bench.backend.clients import DB
 from vectordb_bench.backend.clients.api import IndexType
-from vectordb_bench.backend.dataset import DatasetWithSizeMap, DatasetWithSizeType
+from vectordb_bench.backend.dataset import (
+    BinaryDatasetWithSizeTypes,
+    DatasetWithSizeType,
+    FloatDatasetWithSizeTypes,
+)
 from vectordb_bench.frontend.components.custom.getCustomConfig import get_custom_configs
 
 from vectordb_bench.models import CaseConfig, CaseConfigParamType
@@ -155,7 +159,21 @@ UI_CASE_CLUSTERS: list[UICaseItemCluster] = [
                 description=f"[Batch Cases], {dataset_with_size_type.get_manager().data.name}",
                 cases=generator_label_filter_cases(dataset_with_size_type),
             )
-            for dataset_with_size_type in DatasetWithSizeMap
+            for dataset_with_size_type in FloatDatasetWithSizeTypes
+        ],
+    ),
+    UICaseItemCluster(
+        label="Binary Search Performance Test",
+        uiCaseItems=[
+            UICaseItem(cases=generate_normal_cases(CaseType.PerformanceCohereBinary)),
+            *[
+                UICaseItem(
+                    label=f"Label-Filter Search Performance Test - {dataset_with_size_type.value}",
+                    description=f"[Batch Cases], {dataset_with_size_type.get_manager().data.name}",
+                    cases=generator_label_filter_cases(dataset_with_size_type),
+                )
+                for dataset_with_size_type in BinaryDatasetWithSizeTypes
+            ],
         ],
     ),
 ]

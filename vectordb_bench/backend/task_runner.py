@@ -112,19 +112,30 @@ class CaseRunner(BaseModel):
             log.warning(f"pre run case error: {e}")
             raise e from None
 
+    def _post_run(self):
+        try:
+            self.ca.dataset.release()
+            del self.serial_search_runner
+            del self.search_runner
+        except Exception as e:
+            log.warning(f"release case.dataset error: {e}")
+
     def run(self, drop_old: bool = True) -> Metric:
         log.info("Starting run")
 
         self._pre_run(drop_old)
 
+        result: Metric = None
         if self.ca.label == CaseLabel.Load:
-            return self._run_capacity_case()
+            result = self._run_capacity_case()
         elif self.ca.label == CaseLabel.Performance:
-            return self._run_perf_case(drop_old)
+            result = self._run_perf_case(drop_old)
         else:
             msg = f"unknown case type: {self.ca.label}"
             log.warning(msg)
             raise ValueError(msg)
+        self._post_run()
+        return result
 
     def _run_capacity_case(self) -> Metric:
         """run capacity cases

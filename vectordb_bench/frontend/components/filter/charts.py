@@ -21,6 +21,19 @@ def drawChartByMetric(st, data):
         container.markdown(f"#### {metric}")
         drawChart(container, data, metric)
 
+    showMetric(st.container(), "load_duration", "db_name", data)
+
+
+def showMetric(st, key: str, group_by: str, data):
+    st.markdown(f"#### {key}")
+    item_names = list(set([d[group_by] for d in data]))
+    items = {
+        item_name: list(set([d[key] for d in data if d[group_by] == item_name]))
+        for item_name in item_names
+    }
+    for item, values in items.items():
+        st.markdown(f"{item}: {values}")
+
 
 def getRange(metric, data, padding_multipliers):
     minV = min([d.get(metric, 0) for d in data])
@@ -43,13 +56,23 @@ def drawChart(st, data: list[object], metric):
 
     data.sort(key=lambda a: a[x])
 
+    line_group = "db_name"
+    color = "db"
+    color_discrete_map = COLOR_MAP
+
+    color_count = len(set([d[color] for d in data]))
+    if color_count == 1:
+        color = line_group
+        line_group = None
+        color_discrete_map = None
+
     fig = px.line(
         data,
         x=x,
         y=y,
-        color="db",
-        line_group="db_name",
-        color_discrete_map=COLOR_MAP,
+        color=color,
+        line_group=line_group,
+        color_discrete_map=color_discrete_map,
         text=metric,
         markers=True,
     )

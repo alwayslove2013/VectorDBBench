@@ -56,10 +56,15 @@ class Milvus(VectorDB):
             pass
 
         if not utility.has_collection(self.collection_name):
+            vector_data_type = (
+                DataType.BINARY_VECTOR
+                if self.case_config.metric_type.is_binary()
+                else DataType.FLOAT_VECTOR
+            )
             fields = [
                 FieldSchema(self._primary_field, DataType.INT64, is_primary=True),
                 FieldSchema(self._scalar_id_field, DataType.INT64),
-                FieldSchema(self._vector_field, DataType.FLOAT_VECTOR, dim=dim),
+                FieldSchema(self._vector_field, vector_data_type, dim=dim),
             ]
             if self.with_scalar_labels:
                 log.info("with_scalar_labels, add a new varchar field")
@@ -74,12 +79,24 @@ class Milvus(VectorDB):
 
             log.info(f"{self.name} create collection: {self.collection_name}")
 
+            num_partitions = self.db_config.get("num_partitions", 64)
+            log.info(f"""num_partitions: {num_partitions}""")
+
             # Create the collection
-            col = Collection(
-                name=self.collection_name,
-                schema=CollectionSchema(fields),
-                consistency_level="Session",
-            )
+            if self.with_scalar_labels:
+                col = Collection(
+                    name=self.collection_name,
+                    schema=CollectionSchema(fields),
+                    consistency_level="Session",
+                    num_partitions=num_partitions,
+                )
+                # col.set_properties({"partitionkey.isolation": "true"})
+            else:
+                col = Collection(
+                    name=self.collection_name,
+                    schema=CollectionSchema(fields),
+                    consistency_level="Session",
+                )
 
             self.create_index()
 
@@ -230,18 +247,21 @@ class Milvus(VectorDB):
                 batch_end_offset = min(
                     batch_start_offset + self.batch_size, len(embeddings)
                 )
+                vector_column = embeddings[batch_start_offset:batch_end_offset]
+                if self.case_config.metric_type.is_binary():
+                    vector_column = [bytes(uint_vec) for uint_vec in vector_column]
                 if self.with_scalar_labels:
                     insert_data = [
                         metadata[batch_start_offset:batch_end_offset],
                         metadata[batch_start_offset:batch_end_offset],
-                        embeddings[batch_start_offset:batch_end_offset],
+                        vector_column,
                         labels_data[batch_start_offset:batch_end_offset],
                     ]
                 else:
                     insert_data = [
                         metadata[batch_start_offset:batch_end_offset],
                         metadata[batch_start_offset:batch_end_offset],
-                        embeddings[batch_start_offset:batch_end_offset],
+                        vector_column,
                     ]
                 res = self.col.insert(insert_data)
                 insert_count += len(res.primary_keys)
@@ -269,9 +289,11 @@ class Milvus(VectorDB):
         """Perform a search on a query embedding and return results."""
         assert self.col is not None
 
+        q = [bytes(query)] if self.case_config.metric_type.is_binary() else [query]
+
         # Perform the search.
         res = self.col.search(
-            data=[query],
+            data=q,
             anns_field=self._vector_field,
             param=self.case_config.search_param(),
             limit=k,

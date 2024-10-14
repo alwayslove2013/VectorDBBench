@@ -3,10 +3,14 @@ from ..api import DBConfig, DBCaseConfig, MetricType, IndexType
 
 
 class MilvusConfig(DBConfig):
-    uri: SecretStr = "http://10.104.22.89:19530"
+    uri: SecretStr = "http://10.104.22.116:19530"
+    num_partitions: int = 1
 
     def to_dict(self) -> dict:
-        return {"uri": self.uri.get_secret_value()}
+        return {
+            "uri": self.uri.get_secret_value(),
+            "num_partitions": self.num_partitions,
+        }
 
 
 class MilvusIndexConfig(BaseModel):
@@ -29,6 +33,7 @@ class MilvusIndexConfig(BaseModel):
 
         if self.is_gpu_index and self.metric_type == MetricType.COSINE:
             return MetricType.L2.value
+
         return self.metric_type.value
 
 
@@ -126,6 +131,23 @@ class IVFSQ8Config(MilvusIndexConfig, DBCaseConfig):
 
 class FLATConfig(MilvusIndexConfig, DBCaseConfig):
     index: IndexType = IndexType.Flat
+
+    def index_param(self) -> dict:
+        return {
+            "metric_type": self.parse_metric(),
+            "index_type": self.index.value,
+            "params": {},
+        }
+
+    def search_param(self) -> dict:
+        return {
+            "metric_type": self.parse_metric(),
+            "params": {},
+        }
+
+
+class BINFLATConfig(MilvusIndexConfig, DBCaseConfig):
+    index: IndexType = IndexType.BINFLAT
 
     def index_param(self) -> dict:
         return {

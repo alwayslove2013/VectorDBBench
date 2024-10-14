@@ -113,11 +113,34 @@ class Cohere(BaseDataset):
     dim: int = 768
     metric_type: MetricType = MetricType.COSINE
     use_shuffled: bool = config.USE_SHUFFLED_DATA
-    with_gt: bool = (True,)
+    with_gt: bool = True
     _size_label: dict = {
         100_000: SizeLabel(100_000, "SMALL", 1),
         1_000_000: SizeLabel(1_000_000, "MEDIUM", 1),
         10_000_000: SizeLabel(10_000_000, "LARGE", 10),
+    }
+    with_scalar_labels: bool = True
+    scalar_label_percentages: list[float] = [
+        0.001,
+        0.002,
+        0.005,
+        0.01,
+        0.02,
+        0.05,
+        0.1,
+        0.2,
+        0.5,
+    ]
+
+
+class CohereBinary(BaseDataset):
+    name: str = "Cohere_Binary"
+    dim: int = 1024
+    metric_type: MetricType = MetricType.HAMMING
+    use_shuffled: bool = False
+    with_gt: bool = True
+    _size_label: dict = {
+        10_000_000: SizeLabel(10_000_000, "MEDIUM", 1),
     }
     with_scalar_labels: bool = True
     scalar_label_percentages: list[float] = [
@@ -162,7 +185,7 @@ class OpenAI(BaseDataset):
     dim: int = 1536
     metric_type: MetricType = MetricType.COSINE
     use_shuffled: bool = config.USE_SHUFFLED_DATA
-    with_gt: bool = (True,)
+    with_gt: bool = True
     _size_label: dict = {
         50_000: SizeLabel(50_000, "SMALL", 1),
         500_000: SizeLabel(500_000, "MEDIUM", 1),
@@ -290,6 +313,11 @@ class DatasetManager(BaseModel):
 
         return pl.read_parquet(p)
 
+    def release(self):
+        self.test_data = []
+        self.gt_data = []
+        self.scalar_labels = []
+
 
 class DataSetIterator:
     def __init__(self, dataset: DatasetManager):
@@ -343,6 +371,7 @@ class Dataset(Enum):
     GLOVE = Glove
     SIFT = SIFT
     OPENAI = OpenAI
+    COHERE_BINARY = CohereBinary
 
     def get(self, size: int) -> BaseDataset:
         return self.value(size=size)
@@ -356,6 +385,7 @@ class DatasetWithSizeType(Enum):
     CohereLarge = "Large Cohere (768dim, 10M)"
     OpenAIMedium = "Medium OpenAI (1536dim, 500K)"
     OpenAILarge = "Large OpenAI (1536dim, 5M)"
+    CohereBinaryMedium = "Medium Cohere Binary (1024dim, 10M)"
 
     def get_manager(self) -> DatasetManager:
         if self not in DatasetWithSizeMap:
@@ -382,4 +412,14 @@ DatasetWithSizeMap = {
     DatasetWithSizeType.CohereLarge: Dataset.COHERE.manager(10_000_000),
     DatasetWithSizeType.OpenAIMedium: Dataset.OPENAI.manager(500_000),
     DatasetWithSizeType.OpenAILarge: Dataset.OPENAI.manager(5_000_000),
+    DatasetWithSizeType.CohereBinaryMedium: Dataset.COHERE_BINARY.manager(10_000_000),
 }
+
+FloatDatasetWithSizeTypes = [
+    DatasetWithSizeType.CohereMedium,
+    DatasetWithSizeType.CohereLarge,
+    DatasetWithSizeType.OpenAIMedium,
+    DatasetWithSizeType.OpenAILarge,
+]
+
+BinaryDatasetWithSizeTypes = [DatasetWithSizeType.CohereBinaryMedium]

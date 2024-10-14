@@ -56,6 +56,8 @@ class CaseType(Enum):
     PerformanceCustomDataset = 101
     LabelFilterPerformanceCase = 102
 
+    PerformanceCohereBinary = 200
+
     def case_cls(self, custom_configs: dict | None = None) -> Type["Case"]:
         if custom_configs is None:
             return type2case.get(self)()
@@ -188,6 +190,16 @@ class Performance768D1M(PerformanceCase):
     dataset: DatasetManager = Dataset.COHERE.manager(1_000_000)
     name: str = "Search Performance Test (1M Dataset, 768 Dim)"
     description: str = """This case tests the search performance of a vector database with a medium dataset (<b>Cohere 1M vectors</b>, 768 dimensions) at varying parallel levels.
+Results will show index building time, recall, and maximum QPS."""
+    load_timeout: float | int = config.LOAD_TIMEOUT_768D_1M
+    optimize_timeout: float | int | None = config.OPTIMIZE_TIMEOUT_768D_1M
+
+
+class PerformanceCohereBinary(PerformanceCase):
+    case_id: CaseType = CaseType.PerformanceCohereBinary
+    dataset: DatasetManager = Dataset.COHERE_BINARY.manager(10_000_000)
+    name: str = "Binary Search Performance Test (10M Dataset, 1024 Dim)"
+    description: str = """This case tests the search performance of a vector database with a medium dataset (<b>Cohere Binary 10M vectors</b>, 1024 dimensions) at varying parallel levels.
 Results will show index building time, recall, and maximum QPS."""
     load_timeout: float | int = config.LOAD_TIMEOUT_768D_1M
     optimize_timeout: float | int | None = config.OPTIMIZE_TIMEOUT_768D_1M
@@ -426,4 +438,5 @@ type2case = {
     CaseType.Performance1536D50K: Performance1536D50K,
     CaseType.PerformanceCustomDataset: PerformanceCustomDataset,
     CaseType.LabelFilterPerformanceCase: LabelFilterPerformanceCase,
+    CaseType.PerformanceCohereBinary: PerformanceCohereBinary,
 }
