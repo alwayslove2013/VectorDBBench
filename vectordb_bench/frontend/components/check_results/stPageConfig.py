@@ -1,4 +1,4 @@
-from vectordb_bench.frontend.config.styles import *
+from vectordb_bench.frontend.config.styles import PAGE_TITLE, FAVICON
 
 
 def initResultsPageConfig(st):
@@ -8,6 +8,7 @@ def initResultsPageConfig(st):
         # layout="wide",
         # initial_sidebar_state="collapsed",
     )
+
 
 def initRunTestPageConfig(st):
     st.set_page_config(

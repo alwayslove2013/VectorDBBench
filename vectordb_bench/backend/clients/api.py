@@ -5,6 +5,8 @@ from contextlib import contextmanager
 
 from pydantic import BaseModel, validator, SecretStr
 
+from vectordb_bench.backend.filters import Filter
+
 
 class MetricType(str, Enum):
     L2 = "L2"
@@ -168,13 +170,11 @@ class VectorDB(ABC):
         """
         raise NotImplementedError
 
+    def prepare_filters(self, filters: Filter):
+        pass
+
     @abstractmethod
-    def search_embedding(
-        self,
-        query: list[float],
-        k: int = 100,
-        filters: dict | None = None,
-    ) -> list[int]:
+    def search_embedding(self, query: list[float], k: int = 100, **kwargs) -> list[int]:
         """Get k most similar embeddings to query vector.
 
         Args:
