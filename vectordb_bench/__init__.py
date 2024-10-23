@@ -22,7 +22,7 @@ class config:
     DROP_OLD = env.bool("DROP_OLD", True)
     USE_SHUFFLED_DATA = env.bool("USE_SHUFFLED_DATA", True)
 
-    NUM_CONCURRENCY = env.list("NUM_CONCURRENCY",  [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100], subcast=int )
+    NUM_CONCURRENCY = env.list("NUM_CONCURRENCY",  [10], subcast=int )
 
     CONCURRENCY_DURATION = 30
 
@@ -39,6 +39,7 @@ class config:
 
     CAPACITY_TIMEOUT_IN_SECONDS = 24 * 3600 # 24h
     LOAD_TIMEOUT_DEFAULT        = 2.5 * 3600 # 2.5h
+    LOAD_TIMEOUT_768D_100K      = 1 * 3600 # 1h
     LOAD_TIMEOUT_768D_1M        = 2.5 * 3600 # 2.5h
     LOAD_TIMEOUT_768D_10M       =  25 * 3600 # 25h
     LOAD_TIMEOUT_768D_100M      = 250 * 3600 # 10.41d
@@ -47,6 +48,7 @@ class config:
     LOAD_TIMEOUT_1536D_5M       =  25 * 3600 # 25h
 
     OPTIMIZE_TIMEOUT_DEFAULT    = 30 * 60   # 30min
+    OPTIMIZE_TIMEOUT_768D_100K  = 10 * 60   # 10min
     OPTIMIZE_TIMEOUT_768D_1M    =  30 * 60   # 30min
     OPTIMIZE_TIMEOUT_768D_10M   = 5 * 3600 # 5h
     OPTIMIZE_TIMEOUT_768D_100M  =  50 * 3600 # 50h

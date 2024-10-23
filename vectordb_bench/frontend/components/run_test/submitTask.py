@@ -46,10 +46,10 @@ def advancedSettings(st):
     )
 
     container = st.columns([1, 2])
-    k = container[0].number_input("k",min_value=1, value=100, label_visibility="collapsed")
-    container[1].caption(
-        "K value for number of nearest neighbors to search"
+    k = container[0].number_input(
+        "k", min_value=1, value=100, label_visibility="collapsed"
     )
+    container[1].caption("K value for number of nearest neighbors to search")
 
     return index_already_exists, use_aliyun, k
 
@@ -73,7 +73,8 @@ def controlPanel(st, tasks, taskLabel, isAllValid):
         currentTaskId = benchMarkRunner.get_current_task_id()
         tasksCount = benchMarkRunner.get_tasks_count()
         text = f":running: Running Task {currentTaskId} / {tasksCount}"
-        st.progress(currentTaskId / tasksCount, text=text)
+        if tasksCount > 0:
+            st.progress(currentTaskId / tasksCount, text=text)
 
         columns = st.columns(6)
         columns[0].button(
