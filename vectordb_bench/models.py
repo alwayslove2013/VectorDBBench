@@ -1,7 +1,7 @@
 import logging
 import pathlib
-from datetime import date
-from enum import Enum, StrEnum, auto
+from datetime import date, datetime
+from enum import Enum, StrEnum
 from typing import List, Self
 
 import ujson
@@ -116,10 +116,10 @@ class CaseConfig(BaseModel):
 class TaskStage(StrEnum):
     """Enumerations of various stages of the task"""
 
-    DROP_OLD = auto()
-    LOAD = auto()
-    SEARCH_SERIAL = auto()
-    SEARCH_CONCURRENT = auto()
+    DROP_OLD = "drop_old"
+    LOAD = "load"
+    SEARCH_SERIAL = "search_serial"
+    SEARCH_CONCURRENT = "search_concurrent"
 
     def __repr__(self) -> str:
         return str.__repr__(self.value)
@@ -175,7 +175,7 @@ class TestResult(BaseModel):
 
     def flush(self):
         db2case = self.get_db_results()
-        timestamp = date.today().timestamp()
+        timestamp = datetime.combine(date.today(), datetime.min.time()).timestamp()
         result_root = config.RESULTS_LOCAL_DIR
         for db, result in db2case.items():
             self.write_db_file(

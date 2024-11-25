@@ -21,7 +21,8 @@ class NonFilter(Filter):
     type: FilterType = FilterType.NonFilter
     filter_rate: float = 0.0
 
-    def get_groundtruth_file(self) -> str:
+    @property
+    def groundtruth_file(self) -> str:
         return "neighbors.parquet"
 
 

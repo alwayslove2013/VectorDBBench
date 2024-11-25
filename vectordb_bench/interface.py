@@ -16,8 +16,15 @@ from .backend.data_source import DatasetSource
 from .backend.result_collector import ResultCollector
 from .backend.task_runner import TaskRunner
 from .metric import Metric
-from .models import (CaseResult, LoadTimeoutError, PerformanceTimeoutError,
-                     ResultLabel, TaskConfig, TaskStage, TestResult)
+from .models import (
+    CaseResult,
+    LoadTimeoutError,
+    PerformanceTimeoutError,
+    ResultLabel,
+    TaskConfig,
+    TaskStage,
+    TestResult,
+)
 
 log = logging.getLogger(__name__)
 
@@ -37,10 +44,8 @@ class BenchMarkRunner:
         self.drop_old: bool = True
         self.dataset_source: DatasetSource = DatasetSource.S3
 
-
     def set_drop_old(self, drop_old: bool):
         self.drop_old = drop_old
-
 
     def set_download_address(self, use_aliyun: bool):
         if use_aliyun:
@@ -59,7 +64,9 @@ class BenchMarkRunner:
             log.warning("Empty tasks submitted")
             return False
 
-        log.debug(f"tasks: {tasks}, task_label: {task_label}, dataset source: {self.dataset_source}")
+        log.debug(
+            f"tasks: {tasks}, task_label: {task_label}, dataset source: {self.dataset_source}"
+        )
 
         # Generate run_id
         run_id = uuid.uuid4().hex
@@ -70,7 +77,9 @@ class BenchMarkRunner:
         self.latest_error = ""
 
         try:
-            self.running_task = Assembler.assemble_all(run_id, task_label, tasks, self.dataset_source)
+            self.running_task = Assembler.assemble_all(
+                run_id, task_label, tasks, self.dataset_source
+            )
             self.running_task.display()
         except ModuleNotFoundError as e:
             msg = f"Please install client for database, error={e}"
@@ -86,7 +95,7 @@ class BenchMarkRunner:
         return ResultCollector.collect(target_dir)
 
     def _try_get_signal(self):
-        if self.receive_conn and self.receive_conn.poll():
+        while self.receive_conn and self.receive_conn.poll():
             sig, received = self.receive_conn.recv()
             log.debug(f"Sigal received to process: {sig}, {received}")
             if sig == SIGNAL.ERROR:
@@ -119,7 +128,7 @@ class BenchMarkRunner:
         return 0
 
     def get_current_task_id(self) -> int:
-        """ the index of current running task
+        """the index of current running task
         return -1 if not running
         """
         if not self.running_task:
@@ -161,27 +170,41 @@ class BenchMarkRunner:
                 elif not self.drop_old:
                     drop_old = False
                 try:
-                    log.info(f"[{idx+1}/{running_task.num_cases()}] start case: {runner.display()}, drop_old={drop_old}")
+                    log.info(
+                        f"[{idx+1}/{running_task.num_cases()}] start case: {runner.display()}, drop_old={drop_old}"
+                    )
                     case_res.metrics = runner.run(drop_old)
-                    log.info(f"[{idx+1}/{running_task.num_cases()}] finish case: {runner.display()}, "
-                             f"result={case_res.metrics}, label={case_res.label}")
+                    log.info(
+                        f"[{idx+1}/{running_task.num_cases()}] finish case: {runner.display()}, "
+                        f"result={case_res.metrics}, label={case_res.label}"
+                    )
 
                     # cache the latest succeeded runner
                     latest_runner = runner
 
                     # cache the latest drop_old=True load_duration of the latest succeeded runner
-                    cached_load_duration = case_res.metrics.load_duration if drop_old else cached_load_duration
+                    cached_load_duration = (
+                        case_res.metrics.load_duration
+                        if drop_old
+                        else cached_load_duration
+                    )
 
                     # use the cached load duration if this case didn't drop the existing collection
                     if not drop_old:
-                        case_res.metrics.load_duration = cached_load_duration if cached_load_duration else 0.0
+                        case_res.metrics.load_duration = (
+                            cached_load_duration if cached_load_duration else 0.0
+                        )
                 except (LoadTimeoutError, PerformanceTimeoutError) as e:
-                    log.warning(f"[{idx+1}/{running_task.num_cases()}] case {runner.display()} failed to run, reason={e}")
+                    log.warning(
+                        f"[{idx+1}/{running_task.num_cases()}] case {runner.display()} failed to run, reason={e}"
+                    )
                     case_res.label = ResultLabel.OUTOFRANGE
                     continue
 
                 except Exception as e:
-                    log.warning(f"[{idx+1}/{running_task.num_cases()}] case {runner.display()} failed to run, reason={e}")
+                    log.warning(
+                        f"[{idx+1}/{running_task.num_cases()}] case {runner.display()} failed to run, reason={e}"
+                    )
                     traceback.print_exc()
                     case_res.label = ResultLabel.FAILED
                     continue
@@ -200,7 +223,9 @@ class BenchMarkRunner:
 
             send_conn.send((SIGNAL.SUCCESS, None))
             send_conn.close()
-            log.info(f"Success to finish task: label={running_task.task_label}, run_id={running_task.run_id}")
+            log.info(
+                f"Success to finish task: label={running_task.task_label}, run_id={running_task.run_id}"
+            )
 
         except Exception as e:
             err_msg = f"An error occurs when running task={running_task.task_label}, run_id={running_task.run_id}, err={e}"
@@ -226,12 +251,17 @@ class BenchMarkRunner:
             self.receive_conn.close()
             self.receive_conn = None
 
-
     def _run_async(self, conn: Connection) -> bool:
-        log.info(f"task submitted: id={self.running_task.run_id}, {self.running_task.task_label}, case number: {len(self.running_task.case_runners)}")
+        log.info(
+            f"task submitted: id={self.running_task.run_id}, {self.running_task.task_label}, case number: {len(self.running_task.case_runners)}"
+        )
         global global_result_future
-        executor = concurrent.futures.ProcessPoolExecutor(max_workers=1, mp_context=mp.get_context("spawn"))
-        global_result_future = executor.submit(self._async_task_v2, self.running_task, conn)
+        executor = concurrent.futures.ProcessPoolExecutor(
+            max_workers=1, mp_context=mp.get_context("spawn")
+        )
+        global_result_future = executor.submit(
+            self._async_task_v2, self.running_task, conn
+        )
 
         return True
 
@@ -248,8 +278,9 @@ class BenchMarkRunner:
                 p.send_signal(sig)
             except psutil.NoSuchProcess:
                 pass
-        gone, alive = psutil.wait_procs(children, timeout=timeout,
-                                        callback=on_terminate)
+        gone, alive = psutil.wait_procs(
+            children, timeout=timeout, callback=on_terminate
+        )
 
         for p in alive:
             log.warning(f"force killing child process: {p}")

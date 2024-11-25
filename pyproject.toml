@@ -78,6 +78,7 @@ memorydb = [ "memorydb" ]
 chromadb = [ "chromadb" ]
 awsopensearch = [ "awsopensearch" ]
 zilliz_cloud = []
+restful = [ "flask" ]
 
 [project.urls]
 "repository" = "https://github.com/zilliztech/VectorDBBench"
@@ -85,5 +86,6 @@ zilliz_cloud = []
 [project.scripts]
 init_bench = "vectordb_bench.__main__:main"
 vectordbbench = "vectordb_bench.cli.vectordbbench:cli"
+vdbb_restful = "vectordb_bench.restful.app:main"
 
 [tool.setuptools_scm]
