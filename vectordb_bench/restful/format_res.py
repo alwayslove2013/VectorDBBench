@@ -7,7 +7,8 @@ from dataclasses import asdict
 class FormatResult(BaseModel):
     # db_config
     task_label: str = ""
-    timestamp: float = 0
+    timestamp: int = 0
+    db: str = ""
     db_label: str = ""  # perf-x86
     version: str = ""
     note: str = ""
@@ -18,7 +19,7 @@ class FormatResult(BaseModel):
     # case_config
     case_name: str = ""
     dataset: str = ""
-    dataset_dim: int = 0
+    dim: int = 0
     filter_type: str = ""  # FilterType(Enum).value
     filter_rate: float = 0
     k: int = 100
@@ -33,6 +34,7 @@ class FormatResult(BaseModel):
     conc_num_list: list[int] = []
     conc_qps_list: list[float] = []
     conc_latency_p99_list: list[float] = []
+    conc_latency_avg_list: list[float] = []
 
 
 def format_results(test_results: list[TestResult], task_label: str) -> list[dict]:
@@ -48,21 +50,26 @@ def format_results(test_results: list[TestResult], task_label: str) -> list[dict
                 dataset = case.dataset.data
                 filter = case.filter
                 metrics = asdict(case_result.metrics)
+                for k, v in metrics.items():
+                    if isinstance(v, list) and len(v) > 0:
+                        metrics[k] = [round(d, 6) if isinstance(d, float) else d for d in v]
                 results.append(
                     FormatResult(
                         task_label=test_result.task_label,
-                        timestamp=test_result.timestamp,
+                        timestamp=int(test_result.timestamp),
+                        db=task_config.db.value,
                         db_label=task_config.db_config.db_label,
                         version=task_config.db_config.version,
                         note=task_config.db_config.note,
                         params=task_config.db_case_config.dict(),
                         case_name=case.name,
                         dataset=dataset.full_name,
-                        dataset_dim=dataset.dim,
+                        dim=dataset.dim,
                         filter_type=filter.type.name,
                         filter_rate=filter.filter_rate,
                         k=task_config.case_config.k,
                         **metrics,
+                        
                     ).dict()
                 )
     return results

@@ -11,7 +11,7 @@ def res_wrapper(code: int = 0, message: str = "", data: any = None):
     return jsonify(dict(code=code, message=message, data=data)), 200
 
 
-def success_res(data: any = None, message="succeeded"):
+def success_res(data: any = None, message="success"):
     return res_wrapper(code=0, message=message, data=data)
 
 
@@ -72,7 +72,7 @@ def run():
             case_config = CaseConfig(**task["case_config"])
             print(case_config)
             db_case_config = db.case_config_cls(
-                index_type=task["db_case_config"]["index"]
+                index_type=task["db_case_config"].get("index", None)
             )(**task["db_case_config"])
             stages = [TaskStage(stage) for stage in task.get("stages", ALL_TASK_STAGES)]
             print(stages)
@@ -87,9 +87,8 @@ def run():
     except Exception as e:
         return failed_res(message=f"invalid tasks: {e}")
 
-    task_label = ""
     benchMarkRunner.set_download_address(use_aliyun)
-    res = benchMarkRunner.run(task_configs, task_label)
+    benchMarkRunner.run(task_configs, task_label)
 
     return success_res(message="start")
 
