@@ -57,6 +57,7 @@ class AWSOpenSearch(VectorDB):
                 "knn": True,
                 # "number_of_shards": 5,
                 # "refresh_interval": "600s",
+                # "knn.algo_param.ef_search": 512
             }
         }
         mappings = {
@@ -102,13 +103,17 @@ class AWSOpenSearch(VectorDB):
 
         insert_data = []
         for i in range(len(embeddings)):
-            insert_data.append({"index": {"_index": self.index_name, "_id": metadata[i]}})
-            insert_data.append({self.vector_col_name: embeddings[i]})
+            insert_data.append(
+                {"index": {"_index": self.index_name, "_id": metadata[i]}}
+            )
+            insert_data.append(
+                {self.vector_col_name: embeddings[i], self.id_col_name: metadata[i]}
+            )
         try:
             resp = self.client.bulk(insert_data)
-            log.info(f"AWS_OpenSearch adding documents: {len(resp['items'])}")
-            resp = self.client.indices.stats(self.index_name)
-            log.info(f"Total document count in index: {resp['_all']['primaries']['indexing']['index_total']}")
+            # log.info(f"AWS_OpenSearch adding documents: {len(resp['items'])}")
+            # resp = self.client.indices.stats(self.index_name)
+            # log.info(f"Total document count in index: {resp['_all']['primaries']['indexing']['index_total']}")
             return (len(embeddings), None)
         except Exception as e:
             log.warning(f"Failed to insert data: {self.index_name} error: {str(e)}")
@@ -136,20 +141,32 @@ class AWSOpenSearch(VectorDB):
         body = {
             "size": k,
             "query": {"knn": {self.vector_col_name: {"vector": query, "k": k}}},
-            **({"filter": {"range": {self.id_col_name: {"gt": filters["id"]}}}} if filters else {})
+            **(
+                {"filter": {"range": {self.id_col_name: {"gt": filters["id"]}}}}
+                if filters
+                else {}
+            ),
         }
         try:
-            resp = self.client.search(index=self.index_name, body=body,size=k,_source=False,docvalue_fields=[self.id_col_name],stored_fields="_none_",filter_path=[f"hits.hits.fields.{self.id_col_name}"],)
-            log.info(f'Search took: {resp["took"]}')
-            log.info(f'Search shards: {resp["_shards"]}')
-            log.info(f'Search hits total: {resp["hits"]["total"]}')
+            resp = self.client.search(
+                index=self.index_name,
+                body=body,
+                size=k,
+                _source=False,
+                docvalue_fields=[self.id_col_name],
+                stored_fields="_none_",
+                filter_path=[f"hits.hits.fields.{self.id_col_name}"],
+            )
+            # log.info(f'Search took: {resp["took"]}')
+            # log.info(f'Search shards: {resp["_shards"]}')
+            # log.info(f'Search hits total: {resp["hits"]["total"]}')
             result = [h["fields"][self.id_col_name][0] for h in resp["hits"]["hits"]]
-            #result = [int(d["_id"]) for d in resp["hits"]["hits"]]
+            # result = [int(d["_id"]) for d in resp["hits"]["hits"]]
             # log.info(f'success! length={len(res)}')
 
             return result
         except Exception as e:
-            log.warning(f"Failed to search: {self.index_name} error: {str(e)}")
+            # log.warning(f"Failed to search: {self.index_name} error: {str(e)}")
             raise e from None
 
     def optimize(self):
@@ -172,28 +189,32 @@ class AWSOpenSearch(VectorDB):
                 break
             except Exception as e:
                 log.info(
-                    f"Refresh errored out. Sleeping for {SECONDS_WAITING_FOR_REFRESH_API_CALL_SEC} sec and then Retrying : {e}")
+                    f"Refresh errored out. Sleeping for {SECONDS_WAITING_FOR_REFRESH_API_CALL_SEC} sec and then Retrying : {e}"
+                )
                 time.sleep(SECONDS_WAITING_FOR_REFRESH_API_CALL_SEC)
                 continue
         log.debug(f"Completed refresh for index {self.index_name}")
 
     def _do_force_merge(self):
         log.debug(f"Starting force merge for index {self.index_name}")
-        force_merge_endpoint = f'/{self.index_name}/_forcemerge?max_num_segments=1&wait_for_completion=false'
-        force_merge_task_id = self.client.transport.perform_request('POST', force_merge_endpoint)['task']
+        force_merge_endpoint = f"/{self.index_name}/_forcemerge?max_num_segments=1&wait_for_completion=false"
+        force_merge_task_id = self.client.transport.perform_request(
+            "POST", force_merge_endpoint
+        )["task"]
+        log.info(f"force_merge_task_id: {force_merge_task_id}")
         SECONDS_WAITING_FOR_FORCE_MERGE_API_CALL_SEC = 30
         while True:
             time.sleep(SECONDS_WAITING_FOR_FORCE_MERGE_API_CALL_SEC)
             task_status = self.client.tasks.get(task_id=force_merge_task_id)
-            if task_status['completed']:
+            if task_status["completed"]:
                 break
         log.debug(f"Completed force merge for index {self.index_name}")
 
     def _load_graphs_to_memory(self):
         if self.case_config.engine != AWSOS_Engine.lucene:
             log.info("Calling warmup API to load graphs into memory")
-            warmup_endpoint = f'/_plugins/_knn/warmup/{self.index_name}'
-            self.client.transport.perform_request('GET', warmup_endpoint)
+            warmup_endpoint = f"/_plugins/_knn/warmup/{self.index_name}"
+            self.client.transport.perform_request("GET", warmup_endpoint)
 
     def ready_to_load(self):
         """ready_to_load will be called before load in load cases."""

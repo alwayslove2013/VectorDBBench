@@ -97,7 +97,7 @@ class ReadWriteRunner(MultiProcessingSearchRunner, RatedMultiThreadingInsertRunn
                     recall, ndcg, p99 =self.serial_search_runner.run()
 
                     if idx < len(self.search_stage) - 1:
-                        stage_search_dur = (self.data_volume  * (self.search_stage[idx + 1] - stage) // self.insert_rate) // len(self.concurrencies)
+                        stage_search_dur = (self.data_volume  * (self.search_stage[idx + 1] - stage) // self.insert_rate) // len(self.concurrencies) // 2
                         if stage_search_dur < 30:
                             log.warning(f"Search duration too short, please reduce concurrency count or insert rate, or increase dataset volume: dur={stage_search_dur}, concurrencies={len(self.concurrencies)}, insert_rate={self.insert_rate}")
                         log.info(f"[{batch}/{total_batch}] Conc search - {perc}% start, dur for each conc={stage_search_dur}s")

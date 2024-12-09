@@ -5,15 +5,17 @@ from pydantic import SecretStr, BaseModel
 from ..api import DBConfig, DBCaseConfig, MetricType, IndexType
 
 log = logging.getLogger(__name__)
+
+
 class AWSOpenSearchConfig(DBConfig, BaseModel):
-    host: str = ""
+    host: str = "vpc-tianmin-test-aotn2gd2o7hrrtqeoikxyo2rgq.us-west-2.es.amazonaws.com"
     port: int = 443
-    user: str = ""
-    password: SecretStr = ""
+    user: str = "admin"
+    password: SecretStr = "ahh4Eevee2aa7diuTahh8oos@"
 
     def to_dict(self) -> dict:
         return {
-            "hosts": [{'host': self.host, 'port': self.port}],
+            "hosts": [{"host": self.host, "port": self.port}],
             "http_auth": (self.user, self.password.get_secret_value()),
             "use_ssl": True,
             "http_compress": True,
@@ -32,7 +34,7 @@ class AWSOS_Engine(Enum):
 
 class AWSOpenSearchIndexConfig(BaseModel, DBCaseConfig):
     metric_type: MetricType = MetricType.L2
-    engine: AWSOS_Engine = AWSOS_Engine.faiss
+    engine: AWSOS_Engine = AWSOS_Engine.nmslib
     efConstruction: int = 256
     efSearch: int = 256
     M: int = 16
@@ -42,7 +44,9 @@ class AWSOpenSearchIndexConfig(BaseModel, DBCaseConfig):
             return "innerproduct"
         elif self.metric_type == MetricType.COSINE:
             if self.engine == AWSOS_Engine.faiss:
-                log.info(f"Using metric type as innerproduct because faiss doesn't support cosine as metric type for Opensearch")
+                log.info(
+                    f"Using metric type as innerproduct because faiss doesn't support cosine as metric type for Opensearch"
+                )
                 return "innerproduct"
             return "cosinesimil"
         return "l2"
@@ -55,10 +59,14 @@ class AWSOpenSearchIndexConfig(BaseModel, DBCaseConfig):
             "parameters": {
                 "ef_construction": self.efConstruction,
                 "m": self.M,
-                "ef_search": self.efSearch
-            }
+                # "ef_search": self.efSearch
+            },
         }
         return params
 
     def search_param(self) -> dict:
-        return {}
+        return {
+            "parameters": {
+                "ef_search": self.efSearch
+            }
+        }
