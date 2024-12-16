@@ -14,7 +14,7 @@ from ...metric import calc_ndcg, calc_recall, get_ideal_dcg
 from ...models import LoadTimeoutError, PerformanceTimeoutError
 from .. import utils
 from ... import config
-from vectordb_bench.backend.filter import Filter, LabelFilter
+from vectordb_bench.backend.filter import Filter, LabelFilter, non_filter
 from vectordb_bench.backend.dataset import DatasetManager
 
 NUM_PER_BATCH = config.NUM_PER_BATCH
@@ -174,7 +174,7 @@ class SerialSearchRunner:
         test_data: list[list[float]],
         ground_truth: list[list[int]],
         k: int = 100,
-        filter: dict | None = None,
+        filter: Filter = non_filter,
     ):
         self.db = db
         self.k = k

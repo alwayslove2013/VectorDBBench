@@ -25,6 +25,7 @@ class NonFilter(Filter):
     def groundtruth_file(self) -> str:
         return "neighbors.parquet"
 
+non_filter = NonFilter()
 
 class IntFilter(Filter):
     """

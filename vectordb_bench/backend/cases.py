@@ -5,12 +5,7 @@ from typing import Iterable, Type
 
 from vectordb_bench import config
 from vectordb_bench.backend.clients.api import MetricType
-from vectordb_bench.backend.filter import (
-    Filter,
-    FilterType,
-    IntFilter,
-    NonFilter,
-)
+from vectordb_bench.backend.filter import Filter, FilterType, IntFilter, non_filter
 from vectordb_bench.base import BaseModel
 from vectordb_bench.frontend.components.custom.getCustomConfig import (
     CustomDatasetConfig,
@@ -106,7 +101,7 @@ class Case(BaseModel):
     optimize_timeout: float | int | None = None
 
     filter_rate: float | None = None
-    filter: Filter = NonFilter()
+    filter: Filter = non_filter
 
     @property
     def with_scalar_labels(self) -> bool:
@@ -408,21 +403,23 @@ class StreamingPerformanceCase(Case):
     label: CaseLabel = CaseLabel.Streaming
     dataset_with_size_type: DatasetWithSizeType
     insert_rate: int
-    search_stages: Iterable[float]
-    concs: Iterable[int]
+    search_stages: list[float]
+    read_dur_after_write: int
+    concurrencies: list[int]
 
     def __init__(
         self,
         dataset_with_size_type: DatasetWithSizeType
         | str = DatasetWithSizeType.CohereSmall.value,
-        insert_rate: int = 300,
-        search_stages: Iterable[float] = (0.5, 0.6, 0.7, 0.8, 0.9, 1.0),
-        concs: Iterable[int] = (10, 20, 30),
+        insert_rate: int = 500,
+        search_stages: list[float] = (0.1, 0.3, 0.5, 0.9),
+        read_dur_after_write: int = 30,
+        concurrencies: list[int] = (2, 5),
         **kwargs,
     ):
         if insert_rate % config.NUM_PER_BATCH != 0:
             raise ValueError(
-                f"insert_rate(={insert_rate}) should be divisible by Streaming_Insert_Rate_Step(={config.Streaming_Insert_Rate_Step})"
+                f"insert_rate(={insert_rate}) should be divisible by Streaming_Insert_Rate_Step(={Streaming_Insert_Rate_Step})"
             )
         if not isinstance(dataset_with_size_type, DatasetWithSizeType):
             dataset_with_size_type = DatasetWithSizeType(dataset_with_size_type)
@@ -438,7 +435,8 @@ class StreamingPerformanceCase(Case):
             dataset_with_size_type=dataset_with_size_type,
             insert_rate=insert_rate,
             search_stages=search_stages,
-            concs=concs,
+            read_dur_after_write=read_dur_after_write,
+            concurrencies=concurrencies,
             **kwargs,
         )
 
