@@ -1,4 +1,5 @@
 import streamlit as st
+from vectordb_bench.backend.filter import FilterType
 from vectordb_bench.frontend.components.check_results.footer import footer
 from vectordb_bench.frontend.components.check_results.headerIcon import drawHeaderIcon
 from vectordb_bench.frontend.components.check_results.nav import (
@@ -42,7 +43,9 @@ def main():
 
     # results selector
     resultSelectorContainer = st.sidebar.container()
-    shownData, _, showCaseNames = getshownData(checkedResults, resultSelectorContainer)
+    shownData, _, showCaseNames = getshownData(
+        resultSelectorContainer, checkedResults, filter_type=FilterType.NonFilter
+    )
 
     resultSelectorContainer.divider()
 

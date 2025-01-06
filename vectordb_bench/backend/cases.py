@@ -2,6 +2,7 @@ import typing
 import logging
 from enum import Enum, auto
 from typing import Iterable, Type
+import json
 
 from vectordb_bench import config
 from vectordb_bench.backend.clients.api import MetricType
@@ -404,29 +405,40 @@ class StreamingPerformanceCase(Case):
     dataset_with_size_type: DatasetWithSizeType
     insert_rate: int
     search_stages: list[float]
-    read_dur_after_write: int
     concurrencies: list[int]
+    optimize_after_write: bool = True
+    read_dur_after_write: int = 30
 
     def __init__(
         self,
         dataset_with_size_type: DatasetWithSizeType
         | str = DatasetWithSizeType.CohereSmall.value,
         insert_rate: int = 500,
-        search_stages: list[float] = (0.1, 0.3, 0.5, 0.9),
-        read_dur_after_write: int = 30,
-        concurrencies: list[int] = (2, 5),
+        search_stages: list[float] | str = (0.5, 0.8),
+        concurrencies: list[int] | str = (5, 10),
         **kwargs,
     ):
         if insert_rate % config.NUM_PER_BATCH != 0:
-            raise ValueError(
-                f"insert_rate(={insert_rate}) should be divisible by Streaming_Insert_Rate_Step(={Streaming_Insert_Rate_Step})"
+            _insert_rate = max(
+                Streaming_Insert_Rate_Step,
+                insert_rate // Streaming_Insert_Rate_Step * Streaming_Insert_Rate_Step,
             )
+            log.warning(
+                "[streaming_case init] "
+                + f"insert_rate(={insert_rate}) should be divisible by {Streaming_Insert_Rate_Step}), "
+                + f"reset to {_insert_rate}"
+            )
+            insert_rate = _insert_rate
         if not isinstance(dataset_with_size_type, DatasetWithSizeType):
             dataset_with_size_type = DatasetWithSizeType(dataset_with_size_type)
         dataset = dataset_with_size_type.get_manager()
-
         name = f"Streaming-Perf - {dataset_with_size_type.value}, {insert_rate} rows/s"
         description = f"This case tests the search performance of vector database while maintaining a fixed insertion speed. (dataset: {dataset_with_size_type.value})"
+
+        if isinstance(search_stages, str):
+            search_stages = json.loads(search_stages)
+        if isinstance(concurrencies, str):
+            concurrencies = json.loads(concurrencies)
 
         super().__init__(
             name=name,
@@ -435,7 +447,6 @@ class StreamingPerformanceCase(Case):
             dataset_with_size_type=dataset_with_size_type,
             insert_rate=insert_rate,
             search_stages=search_stages,
-            read_dur_after_write=read_dur_after_write,
             concurrencies=concurrencies,
             **kwargs,
         )

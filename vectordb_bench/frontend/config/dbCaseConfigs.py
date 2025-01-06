@@ -168,7 +168,37 @@ custom_streaming_config: list[ConfigInput] = [
         displayLabel="dataset",
         inputType=InputType.Option,
         inputConfig=dict(options=[dataset.value for dataset in DatasetWithSizeType]),
-    )
+    ),
+    ConfigInput(
+        label=CaseConfigParamType.insert_rate,
+        inputType=InputType.Number,
+        inputConfig=dict(step=100, min=100, max=4_000, value=1000),
+        inputHelp="fixed insertion rate (rows/s), must be divisible by 100"
+    ),
+    ConfigInput(
+        label=CaseConfigParamType.search_stages,
+        inputType=InputType.Text,
+        inputConfig=dict(value="[0.5, 0.8]"),
+        inputHelp="0<=stage<1.0; do search test when inserting a specified amount of data."
+    ),
+    ConfigInput(
+        label=CaseConfigParamType.concurrencies,
+        inputType=InputType.Text,
+        inputConfig=dict(value="[5, 10]"),
+        inputHelp="concurrent num of search test while insertion; record max-qps."
+    ),
+    ConfigInput(
+        label=CaseConfigParamType.optimize_after_write,
+        inputType=InputType.Option,
+        inputConfig=dict(options=[True, False]),
+        inputHelp="whether to optimize after inserting all data"
+    ),
+    ConfigInput(
+        label=CaseConfigParamType.read_dur_after_write,
+        inputType=InputType.Number,
+        inputConfig=dict(step=30, min=0, max=360_000, value=60),
+        inputHelp="search test duration after inserting all data and optimization"
+    ),
 ]
 
 

@@ -96,8 +96,8 @@ def caseConfigSetting(st, uiCaseItem: UICaseItem):
         unsafe_allow_html=True,
     )
     for i, config_input in enumerate(config_inputs):
-        column = columns[1 + i % DB_CASE_CONFIG_SETTING_COLUMNS]
-        key = f"custom-config-{uiCaseItem.label}"
+        column = columns[1 + i % CASE_CONFIG_SETTING_COLUMNS]
+        key = f"custom-config-{uiCaseItem.label}-{config_input.label.value}"
         uiCaseItem.tmp_custom_config[config_input.label.value] = inputWidget(
             column, config=config_input, key=key
         )

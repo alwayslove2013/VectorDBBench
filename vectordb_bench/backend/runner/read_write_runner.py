@@ -1,4 +1,5 @@
 import logging
+import time
 from typing import Iterable
 import multiprocessing as mp
 import concurrent
@@ -6,6 +7,8 @@ import numpy as np
 import math
 
 from vectordb_bench.backend.filter import Filter, non_filter
+from vectordb_bench.backend.utils import time_it
+from vectordb_bench.metric import Metric
 
 from .mp_runner import MultiProcessingSearchRunner
 from .serial_runner import SerialSearchRunner
@@ -33,6 +36,7 @@ class ReadWriteRunner(MultiProcessingSearchRunner, RatedMultiThreadingInsertRunn
             0.8,
             0.9,
         ),  # search from insert portion, 0.0 means search from the start
+        optimize_after_write: bool = True,
         read_dur_after_write: int = 300,  # seconds, search duration when insertion is done
         timeout: float | None = None,
     ):
@@ -42,6 +46,7 @@ class ReadWriteRunner(MultiProcessingSearchRunner, RatedMultiThreadingInsertRunn
         for stage in search_stages:
             assert 0.0 <= stage < 1.0, "each search stage should be in [0.0, 1.0)"
         self.search_stages = sorted(search_stages)
+        self.optimize_after_write = optimize_after_write
         self.read_dur_after_write = read_dur_after_write
 
         log.info(
@@ -75,6 +80,7 @@ class ReadWriteRunner(MultiProcessingSearchRunner, RatedMultiThreadingInsertRunn
             k=k,
         )
 
+    @time_it
     def run_optimize(self):
         """Optimize needs to run in differenct process for pymilvus schema recursion problem"""
         with self.db.init():
@@ -84,6 +90,8 @@ class ReadWriteRunner(MultiProcessingSearchRunner, RatedMultiThreadingInsertRunn
 
     def run_search(self):
         log.info("Search after write - Serial search start")
+        perc = 100
+        test_time = round(time.perf_counter(), 4)
         res, ssearch_dur = self.serial_search_runner.run()
         recall, ndcg, p99_latency = res
         log.info(f"Search after write - Serial search - recall={recall}, ndcg={ndcg}, p99={p99_latency}, dur={ssearch_dur:.4f}")
@@ -91,34 +99,53 @@ class ReadWriteRunner(MultiProcessingSearchRunner, RatedMultiThreadingInsertRunn
         max_qps = self.run_by_dur(self.read_dur_after_write)
         log.info(f"Search after wirte - Conc search finished, max_qps={max_qps}")
 
-        return (max_qps, recall, ndcg, p99_latency)
+        return [(perc, test_time, max_qps, recall, ndcg, p99_latency)]
 
-    def run_read_write(self):
-        with mp.Manager() as m:
-            q = m.Queue()
+    def run_read_write(self) -> Metric:
+        m = Metric()
+        with mp.Manager() as mp_manager:
+            q = mp_manager.Queue()
             with concurrent.futures.ProcessPoolExecutor(mp_context=mp.get_context("spawn"), max_workers=2) as executor:
-                read_write_futures = []
-                read_write_futures.append(executor.submit(self.run_with_rate, q))
-                read_write_futures.append(executor.submit(self.run_search_by_sig, q))
+                insert_future = executor.submit(self.run_with_rate, q)
+                search_future = executor.submit(self.run_search_by_sig, q)
 
                 try:
-                    for f in concurrent.futures.as_completed(read_write_futures):
-                        res = f.result()
-                        log.info(f"Result = {res}")
+                    start_time = time.perf_counter()
+                    _, m.insert_duration = insert_future.result()
+                    search_res = search_future.result()
 
                     # Wait for read_write_futures finishing and do optimize and search
-                    op_future = executor.submit(self.run_optimize)
-                    op_future.result()
+                    if self.optimize_after_write:
+                        op_future = executor.submit(self.run_optimize)
+                        _, m.optimize_duration = op_future.result()
+                        log.info(f"Optimize cost {m.optimize_duration}s")
+                    else:
+                        log.info("Skip optimization")
 
-                    search_future = executor.submit(self.run_search)
-                    last_res = search_future.result()
-
-                    log.info(f"Max QPS after optimze and search: {last_res}")
+                    
+                    if self.read_dur_after_write > 0:
+                        final_search_future = executor.submit(self.run_search)
+                        final_search_res = final_search_future.result()
+                    else:
+                        log.info("Skip search after write")
+                        final_search_res = []
+                    
+                    if (search_res is not None and final_search_res is not None):
+                        r = [*search_res, *final_search_res]
+                        m.st_search_stage_list = [d[0] for d in r]
+                        m.st_search_time_list = [round(d[1] - start_time, 4) for d in r]
+                        m.st_max_qps_list_list = [d[2] for d in r]
+                        m.st_recall_list = [d[3] for d in r]
+                        m.st_ndcg_list = [d[4] for d in r]
+                        m.st_serial_latency_p99_list = [d[5] for d in r]
+                    
                 except Exception as e:
                     log.warning(f"Read and write error: {e}")
                     executor.shutdown(wait=True, cancel_futures=True)
                     raise e
-        log.info("Concurrent read write all done")
+        m.st_ideal_insert_duration = math.ceil(self.data_volume / self.insert_rate)
+        log.info(f"Concurrent read write all done, results: {m}")
+        return m
 
     def run_search_by_sig(self, q):
         """
@@ -150,7 +177,8 @@ class ReadWriteRunner(MultiProcessingSearchRunner, RatedMultiThreadingInsertRunn
             got = wait_next_target(start_batch, target_batch)
             if got is False:
                 log.warning(f"Abnormal exit, target_batch={target_batch}, start_batch={start_batch}")
-                return
+                return None
+            test_time = round(time.perf_counter(), 4)
 
             log.info(f"Insert {perc}% done, total batch={total_batch}")
             log.info(f"[{target_batch}/{total_batch}] Serial search - {perc}% start")
@@ -165,7 +193,7 @@ class ReadWriteRunner(MultiProcessingSearchRunner, RatedMultiThreadingInsertRunn
                 csearch_dur = total_dur_between_stages - ssearch_dur
 
                 # Try to leave room for init process executors
-                csearch_dur = csearch_dur - 30 if csearch_dur > 60 else csearch_dur
+                csearch_dur = csearch_dur - 30 if csearch_dur > 60 else csearch_dur - 15
 
                 each_conc_search_dur = csearch_dur / len(self.concurrencies)
                 if each_conc_search_dur < 30:
@@ -174,11 +202,11 @@ class ReadWriteRunner(MultiProcessingSearchRunner, RatedMultiThreadingInsertRunn
 
             # The last stage
             else:
-                each_conc_search_dur = 60
+                each_conc_search_dur = 10
 
             log.info(f"[{target_batch}/{total_batch}] Concurrent search - {perc}% start, dur={each_conc_search_dur:.4f}")
             max_qps = self.run_by_dur(each_conc_search_dur)
-            result.append((perc, max_qps, recall, ndcg, p99_latency))
+            result.append((perc, test_time, max_qps, recall, ndcg, p99_latency))
 
             start_batch = target_batch
 

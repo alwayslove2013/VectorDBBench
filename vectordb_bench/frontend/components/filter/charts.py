@@ -3,18 +3,17 @@ from vectordb_bench.frontend.config.styles import COLOR_MAP
 from vectordb_bench.metric import metricUnitMap
 
 
-def drawCharts(st, allData, failedTasks, _):
+def drawCharts(st, allData, **kwargs):
     dataset_names = list(set([data["dataset_name"] for data in allData]))
     dataset_names.sort()
     for dataset_name in dataset_names:
         container = st.container()
         container.subheader(dataset_name)
         data = [d for d in allData if d["dataset_name"] == dataset_name]
-        drawChartByMetric(container, data)
+        drawChartByMetric(container, data, **kwargs)
 
 
-def drawChartByMetric(st, data):
-    metrics = ["qps", "recall"]
+def drawChartByMetric(st, data, metrics=("qps", "recall"), **kwargs):
     columns = st.columns(len(metrics))
     for i, metric in enumerate(metrics):
         container = columns[i]
@@ -47,9 +46,9 @@ def drawChart(st, data: list[object], metric):
         data,
         x=x,
         y=y,
-        color="db",
+        color="db_name",
         line_group="db_name",
-        color_discrete_map=COLOR_MAP,
+        # color_discrete_map=COLOR_MAP,
         text=metric,
         markers=True,
     )

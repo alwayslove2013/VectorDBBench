@@ -227,9 +227,8 @@ class CaseRunner(BaseModel):
     def _run_streaming_case(self) -> Metric:
         log.info("Start streaming case")
         try:
-            m = Metric()
             self._init_read_write_runner()
-            self.read_write_runner.run_read_write()
+            m = self.read_write_runner.run_read_write()
         except Exception as e:
             log.warning(f"Failed to run streaming case, reason = {e}")
             traceback.print_exc()
@@ -338,6 +337,7 @@ class CaseRunner(BaseModel):
             dataset=ca.dataset,
             insert_rate=ca.insert_rate,
             search_stages=ca.search_stages,
+            optimize_after_write=ca.optimize_after_write,
             read_dur_after_write=ca.read_dur_after_write,
             concurrencies=ca.concurrencies,
             k=self.config.case_config.k,

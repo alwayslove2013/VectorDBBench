@@ -15,6 +15,7 @@ from .backend.cases import Case, CaseType
 from .base import BaseModel
 from . import config
 from .metric import Metric
+from functools import lru_cache
 
 log = logging.getLogger(__name__)
 
@@ -87,7 +88,11 @@ class CaseConfigParamType(Enum):
     maxNumPrefetchDatasets = "max_num_prefetch_datasets"
 
     dataset_with_size_type = "dataset_with_size_type"
-
+    insert_rate = "insert_rate"
+    search_stages = "search_stages"
+    concurrencies = "concurrencies"
+    optimize_after_write = "optimize_after_write"
+    read_dur_after_write = "read_dur_after_write"
 
 class CustomizedCase(BaseModel):
     pass
@@ -122,6 +127,7 @@ class CaseConfig(BaseModel):
         return hash(self.json())
 
     @property
+    @lru_cache(maxsize=None)
     def case(self) -> Case:
         return self.case_id.case_cls(self.custom_case)
 

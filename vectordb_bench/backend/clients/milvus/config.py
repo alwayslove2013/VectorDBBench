@@ -3,7 +3,7 @@ from ..api import DBConfig, DBCaseConfig, MetricType, IndexType
 
 
 class MilvusConfig(DBConfig):
-    uri: SecretStr = "http://localhost:19530"
+    uri: SecretStr = "http://10.102.7.179:19530"
     user: str | None = None
     password: SecretStr | None = None
 

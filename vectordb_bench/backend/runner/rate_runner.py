@@ -11,13 +11,14 @@ from vectordb_bench.backend.utils import time_it
 from vectordb_bench import config
 
 from .util import get_data
+
 log = logging.getLogger(__name__)
 
 
 class RatedMultiThreadingInsertRunner:
     def __init__(
         self,
-        rate: int, # numRows per second
+        rate: int,  # numRows per second
         db: api.VectorDB,
         dataset_iter: DataSetIterator,
         normalize: bool = False,
@@ -30,67 +31,90 @@ class RatedMultiThreadingInsertRunner:
         self.insert_rate = rate
         self.batch_rate = rate // config.NUM_PER_BATCH
 
+        self.executing_futures = []
+        self.sig_idx = 0
+
     def send_insert_task(self, db, emb: list[list[float]], metadata: list[str]):
+        time.sleep(0.9)
         db.insert_embeddings(emb, metadata)
 
     @time_it
     def run_with_rate(self, q: mp.Queue):
-        with ThreadPoolExecutor(max_workers=mp.cpu_count()) as executor:
-            executing_futures = []
+        # with ThreadPoolExecutor(max_workers=mp.cpu_count()) as executor:
+        with ThreadPoolExecutor(max_workers=2) as executor:
 
             @time_it
             def submit_by_rate() -> bool:
                 rate = self.batch_rate
                 for data in self.dataset:
                     emb, metadata = get_data(data, self.normalize)
-                    executing_futures.append(executor.submit(self.send_insert_task, self.db, emb, metadata))
+                    self.executing_futures.append(
+                        executor.submit(self.send_insert_task, self.db, emb, metadata)
+                    )
                     rate -= 1
 
                     if rate == 0:
                         return False
                 return rate == self.batch_rate
 
+            def check_and_send_signal(wait_interval, finished=False):
+                try:
+                    done, not_done = concurrent.futures.wait(
+                        self.executing_futures,
+                        timeout=wait_interval,
+                        return_when=concurrent.futures.FIRST_EXCEPTION,
+                    )
+                    if len(not_done) > 0:
+                        log.warning(
+                            f"[{len(not_done)}] tasks are not done, trying to wait in the next round"
+                        )
+                        self.executing_futures = list(not_done)
+                    else:
+                        self.executing_futures = []
+
+                    self.sig_idx += len(done)
+                    while self.sig_idx >= self.batch_rate:
+                        self.sig_idx -= self.batch_rate
+                        if (
+                            self.sig_idx < self.batch_rate
+                            and len(not_done) == 0
+                            and finished
+                        ):
+                            q.put(True, block=True)
+                        else:
+                            q.put(False, block=False)
+
+                except Exception as e:
+                    log.warning(f"task error, terminating, err={e}")
+                    q.put(None, block=True)
+                    executor.shutdown(wait=True, cancel_futures=True)
+                    raise e
+
             with self.db.init():
+                start_time = time.perf_counter()
+                inserted_batch_cnt = 0
+
                 while True:
-                    start_time = time.perf_counter()
                     finished, elapsed_time = submit_by_rate()
                     if finished is True:
-                        q.put(True, block=True)
-                        log.info(f"End of dataset, left unfinished={len(executing_futures)}")
+                        log.info(
+                            f"End of dataset, left unfinished={len(self.executing_futures)}"
+                        )
                         break
-
-                    q.put(False, block=False)
+                    if elapsed_time >= 0.9:
+                        log.warning(
+                            f"Submit insert tasks took {elapsed_time}s, expected 1s, indicating potential resource limitations on the client machine."
+                        )
                     wait_interval = 1 - elapsed_time if elapsed_time < 1 else 0.001
 
-                    try:
-                        done, not_done = concurrent.futures.wait(
-                            executing_futures,
-                            timeout=wait_interval,
-                            return_when=concurrent.futures.FIRST_EXCEPTION)
+                    check_and_send_signal(wait_interval, finished=False)
 
-                        if len(not_done) > 0:
-                            log.warning(f"Failed to finish all tasks in 1s, [{len(not_done)}/{len(executing_futures)}] tasks are not done, waited={wait_interval:.2f}, trying to wait in the next round")
-                            executing_futures = list(not_done)
-                        else:
-                            log.debug(f"Finished {len(executing_futures)} insert-{config.NUM_PER_BATCH} task in 1s, wait_interval={wait_interval:.2f}")
-                            executing_futures = []
-                    except Exception as e:
-                            log.warn(f"task error, terminating, err={e}")
-                            q.put(None, block=True)
-                            executor.shutdown(wait=True, cancel_futures=True)
-                            raise e
-
-                    dur = time.perf_counter() - start_time
+                    dur = time.perf_counter() - start_time - inserted_batch_cnt * 1
                     if dur < 1:
                         time.sleep(1 - dur)
+                    inserted_batch_cnt += 1
 
                 # wait for all tasks in executing_futures to complete
-                if len(executing_futures) > 0:
-                    try:
-                        done, _ = concurrent.futures.wait(executing_futures,
-                           return_when=concurrent.futures.FIRST_EXCEPTION)
-                    except Exception as e:
-                        log.warn(f"task error, terminating, err={e}")
-                        q.put(None, block=True)
-                        executor.shutdown(wait=True, cancel_futures=True)
-                        raise e
+                wait_interval = 1
+                while len(self.executing_futures) > 0:
+                    check_and_send_signal(wait_interval, finished=True)

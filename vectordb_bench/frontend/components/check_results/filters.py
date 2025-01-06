@@ -12,7 +12,9 @@ import streamlit as st
 from vectordb_bench.models import CaseResult, TestResult
 
 
-def getshownData(st, results: list[TestResult], filter_type: FilterType):
+def getshownData(
+    st, results: list[TestResult], filter_type: FilterType = FilterType.NonFilter
+):
     # hide the nav
     st.markdown(
         "<style> div[data-testid='stSidebarNav'] {display: none;} </style>",
@@ -62,12 +64,7 @@ def getShowDbsAndCases(
     initSidebarExanderStyle(st)
     allDbNames = list(set({res.task_config.db_name for res in result}))
     allDbNames.sort()
-    allCases: list[Case] = [
-        res.task_config.case_config.case_id.case_cls(
-            res.task_config.case_config.custom_case
-        )
-        for res in result
-    ]
+    allCases: list[Case] = [res.task_config.case_config.case for res in result]
     allCases = [case for case in allCases if case.filter.type == filter_type]
 
     # DB Filter

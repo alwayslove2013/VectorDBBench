@@ -44,7 +44,7 @@ def main():
     NavToQuriesPerDollar(navContainer)
 
     # charts
-    drawCharts(st, shownData, failedTasks, showCaseNames)
+    drawCharts(st, shownData)
 
     # footer
     footer(st.container())
