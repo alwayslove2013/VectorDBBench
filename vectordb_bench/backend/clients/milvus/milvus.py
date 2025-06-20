@@ -46,7 +46,7 @@ class Milvus(VectorDB):
         self._primary_field = "pk"
         self._scalar_id_field = "id"
         self._scalar_label_field = "label"
-        self._vector_field = "vector"
+        self._vector_field = "emb"
         self._vector_index_name = "vector_idx"
         self._scalar_id_index_name = "id_sort_idx"
         self._scalar_labels_index_name = "labels_idx"
