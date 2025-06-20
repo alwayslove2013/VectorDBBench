@@ -69,6 +69,7 @@ class AliyunOSSReader(DatasetReader):
         return True
 
     def read(self, dataset: str, files: list[str], local_ds_root: pathlib.Path):
+        return
         downloads = []
         if not local_ds_root.exists():
             log.info(f"local dataset root path not exist, creating it: {local_ds_root}")
