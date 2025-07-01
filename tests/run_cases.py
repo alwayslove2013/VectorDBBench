@@ -11,7 +11,8 @@ import time
 
 
 uri = ""
-token = ""
+user = ""
+password = ""
 
 db_label = f"8cu-perf"
 version = ""
@@ -20,7 +21,7 @@ version = ""
 def generate_tasks(
     tasks: list[TaskConfig], db_label: str, case_configs: list[CaseConfig], db_case_config: AutoIndexConfig
 ):
-    db_config = ZillizCloudConfig(uri=uri, token=token, db_label=db_label, version=version)
+    db_config = ZillizCloudConfig(uri=uri, user=user, password=password, db_label=db_label, version=version)
     for case_config in case_configs:
         tasks.append(
             TaskConfig(db=DB.ZillizCloud, db_config=db_config, case_config=case_config, db_case_config=db_case_config)
