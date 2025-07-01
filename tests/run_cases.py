@@ -79,7 +79,7 @@ if __name__ == "__main__":
     data_size = DatasetWithSizeType.CohereLarge
     levels = [1]
     num_concurrency = [200]
-    concurrency_duration = 60 * 5
+    concurrency_duration = 60 * 10
     k = 100
     use_partition_key = False
     num_partitions = 1
