@@ -81,6 +81,7 @@ class BaseDataset(BaseModel):
 
     @property
     def train_files(self) -> list[str]:
+        return []
         return utils.compose_train_files(self.file_count, self.use_shuffled)
 
 
