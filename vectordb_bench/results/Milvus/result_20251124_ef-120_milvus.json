@@ -1,0 +1,127 @@
+{
+    "run_id": "367a7766235442359d8b0d08ea92fa2e",
+    "task_label": "ef-120",
+    "results": [
+        {
+            "metrics": {
+                "max_load_count": 0,
+                "insert_duration": 0.0,
+                "optimize_duration": 0.0,
+                "load_duration": 0.0,
+                "qps": 336.0447,
+                "serial_latency_p99": 0.0085,
+                "serial_latency_p95": 0.0073,
+                "recall": 0.9663,
+                "ndcg": 0.9643,
+                "conc_num_list": [
+                    1,
+                    5,
+                    10,
+                    20,
+                    30,
+                    40,
+                    60,
+                    80
+                ],
+                "conc_qps_list": [
+                    153.2828,
+                    258.89,
+                    286.574,
+                    306.2542,
+                    324.9143,
+                    328.1694,
+                    333.982,
+                    336.0447
+                ],
+                "conc_latency_p99_list": [
+                    0.008537211212969856,
+                    0.027474629011703656,
+                    0.0573826082132291,
+                    0.09840424218215049,
+                    0.12916776971542274,
+                    0.16594263933948245,
+                    0.24085098286857837,
+                    0.33441372906789146
+                ],
+                "conc_latency_p95_list": [
+                    0.007413203259056899,
+                    0.02283684301073663,
+                    0.049425774143310265,
+                    0.08709350081626327,
+                    0.11553913580137305,
+                    0.15083728891622736,
+                    0.22130401519825682,
+                    0.29653273248986806
+                ],
+                "conc_latency_avg_list": [
+                    0.006520269211788495,
+                    0.01930239961066423,
+                    0.03487427102231492,
+                    0.06517663806607087,
+                    0.09208685430777885,
+                    0.1214926551668151,
+                    0.17887157564364697,
+                    0.2367514902363734
+                ],
+                "st_ideal_insert_duration": 0,
+                "st_search_stage_list": [],
+                "st_search_time_list": [],
+                "st_max_qps_list_list": [],
+                "st_recall_list": [],
+                "st_ndcg_list": [],
+                "st_serial_latency_p99_list": [],
+                "st_serial_latency_p95_list": [],
+                "st_conc_failed_rate_list": []
+            },
+            "task_config": {
+                "db": "Milvus",
+                "db_config": {
+                    "db_label": "aliyun",
+                    "version": "",
+                    "note": "",
+                    "uri": "**********",
+                    "user": "root",
+                    "password": "**********",
+                    "num_shards": 1,
+                    "replica_number": 1
+                },
+                "db_case_config": {
+                    "index": "HNSW",
+                    "metric_type": "COSINE",
+                    "use_partition_key": false,
+                    "M": 16,
+                    "efConstruction": 256,
+                    "ef": 120
+                },
+                "case_config": {
+                    "case_id": 4,
+                    "custom_case": null,
+                    "k": 100,
+                    "concurrency_search_config": {
+                        "num_concurrency": [
+                            1,
+                            5,
+                            10,
+                            20,
+                            30,
+                            40,
+                            60,
+                            80
+                        ],
+                        "concurrency_duration": 60,
+                        "concurrency_timeout": 3600
+                    }
+                },
+                "stages": [
+                    "drop_old",
+                    "load",
+                    "search_serial",
+                    "search_concurrent"
+                ]
+            },
+            "label": ":)"
+        }
+    ],
+    "file_fmt": "result_{}_{}_{}.json",
+    "timestamp": 1763913600.0
+}
